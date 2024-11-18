@@ -188,7 +188,7 @@
     "@angular/compiler-cli": "^14.3.0",
     "@backbase/backbase-theme-retail-preset": "1.25.0",
     "@backbase/employee-web-app-root-util-dev-tools": "4.1.0",
-    "@backbase/employee-web-app-schematics": "5.5.0",
+    "@backbase/employee-web-app-schematics": "6.0.5",
     "@types/googlemaps": "3.43.3",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
