@@ -1,0 +1,15 @@
+<ng-template #conversationList>
+  <bb-ewa-conversation-list-layout-custom
+    *ngIf="(conversationId$ | async) === undefined"
+    [showFilters]="!viewType"
+    [filterParams]="filterParameters$ | async"
+    [loadingEvent]="loadingEvents$ | async"
+    [totalItems]="totalItems$ | async"
+    (pageChange)="pageChange($event)"
+  ></bb-ewa-conversation-list-layout-custom>
+</ng-template>
+
+<bb-ewa-conversation-thread-widget-wrapper-custom
+  *ngIf="conversationId$ | async as conversationId; else conversationList"
+  [conversationId]="conversationId"
+></bb-ewa-conversation-thread-widget-wrapper-custom>

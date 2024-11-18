@@ -1,0 +1,26 @@
+<bb-employee-web-app-root>
+  <ng-template #workspaceLinks>
+    <li
+      bb-ewa-workspace-link="/support"
+      *bbIfEntitlements="
+        'User.ManageUsers.view OR MessageCenter.ManageMessages.view OR MessageCenter.SuperviseMessages.view'
+      "
+      i18n="
+        Customer support workspace menu item|Link to navigate to the Customer
+        Support workspace@@employee-app.workspace-nav.customer-support"
+    >
+      Customer support
+    </li>
+    <li
+      bb-ewa-workspace-link="/admin"
+      *bbIfEntitlements="
+        'Audit.Audit.view OR Identities.ManageIdentities.create OR Limits.ManageGlobalLimits.view OR ServiceAgreement.ManageServiceAgreements.view OR MessageCenter.ManageTopics.view OR LegalEntity.ManageLegalEntities.create OR LegalEntity.ManageLegalEntities.view OR ConversationHistory.ConversationHistoryConfiguration.view OR RealTimeCommunications.ManageChatQueues.view OR RealTimeCommunications.ManageChatQueueAssignments.view OR *.*.approve'
+      "
+      i18n="
+        Bank admin workspace menu item|Link to navigate to the Bank Admin
+        workspace@@employee-app.workspace-nav.bank-admin"
+    >
+      Bank admin
+    </li>
+  </ng-template>
+</bb-employee-web-app-root>

@@ -1,0 +1,225 @@
+<nav role="navigation" data-role="bank-admin-nav">
+  <ul class="bb-layout__vertical-nav">
+    <li class="bb-layout__vertical-nav-section">
+      <div
+        class="bb-layout__vertical-nav-header"
+        i18n="
+          Bank admin menu header|Title text for the Bank admin workspace nav
+          menu@@employee-app.bank-admin.nav-title"
+      >
+        Bank admin workspace
+      </div>
+      <ul class="bb-layout__vertical-nav">
+        <li
+          class="bb-layout__vertical-nav-item"
+          *bbIfEntitlements="entitlements.userEnrollment"
+        >
+          <a
+            class="bb-layout__vertical-nav-item-link"
+            routerLink="user-enrollment"
+            routerLinkActive="bb-layout__vertical-nav-item-link--active"
+          >
+            <i class="bicon bicon-how-to-reg bb-navigation-item__icon"></i>
+            <span
+              class="bb-layout__vertical-nav-item-title"
+              i18n="
+                User enrollment menu item|Link text to navigate to the User
+                enrollment admin
+                page@@employee-app.bank-admin-nav.user-enrollment"
+            >
+              User enrollment
+            </span>
+          </a>
+        </li>
+        <li
+          class="bb-layout__vertical-nav-item"
+          *bbIfEntitlements="entitlements.createUser"
+        >
+          <a
+            class="bb-layout__vertical-nav-item-link"
+            routerLink="create-user"
+            routerLinkActive="bb-layout__vertical-nav-item-link--active"
+          >
+            <i class="bicon bicon-person-add bb-navigation-item__icon"></i>
+            <span
+              class="bb-layout__vertical-nav-item-title"
+              i18n="
+                Create user menu item|Link text to navigate to the create user
+                admin page@@employee-app.bank-admin-nav.create-user"
+            >
+              Create user
+            </span>
+          </a>
+        </li>
+        <li
+          class="bb-layout__vertical-nav-item"
+          *bbIfEntitlements="entitlements.legalEntities"
+        >
+          <a
+            class="bb-layout__vertical-nav-item-link"
+            routerLink="legal-entities"
+            routerLinkActive="bb-layout__vertical-nav-item-link--active"
+          >
+            <i class="bicon bicon-business bb-navigation-item__icon"></i>
+            <span
+              class="bb-layout__vertical-nav-item-title"
+              i18n="
+                Legal entities menu item|Link text to navigate to the Legal
+                entities admin page@@employee-app.bank-admin-nav.legal-entities"
+            >
+              Legal entities
+            </span>
+          </a>
+        </li>
+        <li
+          class="bb-layout__vertical-nav-item"
+          *bbIfEntitlements="entitlements.serviceAgreements"
+        >
+          <a
+            class="bb-layout__vertical-nav-item-link"
+            routerLink="service-agreements"
+            routerLinkActive="bb-layout__vertical-nav-item-link--active"
+          >
+            <i class="bicon bicon-lock bb-navigation-item__icon"></i>
+            <span
+              class="bb-layout__vertical-nav-item-title"
+              i18n="
+                Service Agreements menu item|Link text to navigate to the
+                Service Agreements admin
+                page@@employee-app.bank-admin-nav.service-agreements"
+            >
+              Service agreements
+            </span>
+          </a>
+        </li>
+        <li
+          class="bb-layout__vertical-nav-item"
+          *bbIfEntitlements="entitlements.approvalLog"
+        >
+          <a
+            class="bb-layout__vertical-nav-item-link"
+            routerLink="approval-log"
+            routerLinkActive="bb-layout__vertical-nav-item-link--active"
+          >
+            <i class="bicon bicon-done-all bb-navigation-item__icon"></i>
+            <span
+              class="bb-layout__vertical-nav-item-title"
+              i18n="
+                Approval log menu item|Link text to navigate to the Approval log
+                page@@employee-app.bank-admin-nav.approval-log"
+            >
+              Approval log
+            </span>
+          </a>
+        </li>
+        <li
+          class="bb-layout__vertical-nav-item"
+          *bbIfEntitlements="entitlements.audit"
+        >
+          <a
+            class="bb-layout__vertical-nav-item-link"
+            routerLink="audit"
+            routerLinkActive="bb-layout__vertical-nav-item-link--active"
+          >
+            <i class="bicon bicon-audit bb-navigation-item__icon"></i>
+            <span
+              class="bb-layout__vertical-nav-item-title"
+              i18n="
+                Audit menu item|Link text to navigate to the Audit page in the
+                Bank admin workspace@@employee-app.bank-admin-nav.audit"
+            >
+              Audit
+            </span>
+          </a>
+        </li>
+        <li
+          class="bb-layout__vertical-nav-item"
+          *bbIfEntitlements="entitlements.topics"
+        >
+          <a
+            class="bb-layout__vertical-nav-item-link"
+            routerLink="topics"
+            routerLinkActive="bb-layout__vertical-nav-item-link--active"
+          >
+            <i
+              class="bicon bicon-markunread-mailbox bb-navigation-item__icon"
+            ></i>
+            <span
+              class="bb-layout__vertical-nav-item-title"
+              i18n="
+                Topic management menu item|Link text to navigate to the Topic
+                management page@@employee-app.bank-admin-nav.topic-management"
+            >
+              Topic management
+            </span>
+          </a>
+        </li>
+        <li
+          class="bb-layout__vertical-nav-item"
+          *bbIfEntitlements="entitlements.conversationCategory"
+        >
+          <a
+            class="bb-layout__vertical-nav-item-link"
+            routerLink="conversation-category"
+            routerLinkActive="bb-layout__vertical-nav-item-link--active"
+          >
+            <i class="bicon bicon-speaker-notes bb-navigation-item__icon"></i>
+            <span
+              class="bb-layout__vertical-nav-item-title"
+              i18n="
+                Conversation category menu item|Link text to navigate to the
+                conversation category
+                page@@employee-app.bank-admin-nav.conversation-category"
+            >
+              Conversation category
+            </span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li
+      class="bb-layout__vertical-nav-separator"
+      role="separator"
+      *bbIfEntitlements="configMenuHeaderEntitlements"
+    ></li>
+    <li
+      class="bb-layout__vertical-nav-section"
+      *bbIfEntitlements="configMenuHeaderEntitlements"
+    >
+      <div
+        class="bb-layout__vertical-nav-header"
+        data-role="bank-admin-configuration-nav-header"
+        i18n="
+          Configuration menu header|Title text for the Configuration header in
+          Bank admin workspace nav
+          menu@@employee-app.bank-admin-nav.configuration"
+      >
+        Configuration
+      </div>
+      <ul class="bb-layout__vertical-nav">
+        <li
+          class="bb-layout__vertical-nav-item"
+          *bbIfEntitlements="entitlements.globalLimits"
+        >
+          <a
+            class="bb-layout__vertical-nav-item-link"
+            routerLink="global-limits"
+            routerLinkActive="bb-layout__vertical-nav-item-link--active"
+          >
+            <i
+              class="bicon bicon-vertical-align-top bb-navigation-item__icon"
+            ></i>
+            <span
+              class="bb-layout__vertical-nav-item-title"
+              i18n="
+                Global limits menu item|Link text to navigate to the Global
+                Limits page@@employee-app.bank-admin-nav.global-limits"
+            >
+              Global limits
+            </span>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>

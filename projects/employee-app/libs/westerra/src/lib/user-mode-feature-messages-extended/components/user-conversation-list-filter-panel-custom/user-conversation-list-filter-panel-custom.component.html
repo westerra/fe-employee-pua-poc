@@ -1,0 +1,98 @@
+<div
+  class="bb-block bb-block--md bb-ewa-conversation-list-filter-panel"
+  *ngIf="visible"
+>
+  <form
+    [formGroup]="filterForm"
+    (submit)="submit()"
+    data-role="conversation-list-filter-form"
+  >
+    <div class="bb-stack bb-stack--wrap">
+      <div
+        class="form-group bb-stack__item bb-form-field bb-form-field--md bb-ewa-conversation-list-filter-panel__filter-field"
+      >
+        <bb-dropdown-single-select-ui
+          data-role="conversation-list-filter-topic-selector"
+          label="Topic"
+          i18n-label="
+            Topic
+            label@@messages.messagesCommon.conversationsListFilterConversation.topicLabel"
+          [options]="topics"
+          displayAttributePath="name"
+          [defaultOptionAsPlaceholder]="true"
+          placeholder="All"
+          i18n-placeholder="
+            All topics|Dropdown option for topic filter to show messages for all
+            topics@@messages.messagesCommon.conversationsListFilterConversation.selectTopic.all"
+          formControlName="topic"
+        ></bb-dropdown-single-select-ui>
+      </div>
+      <div
+        class="form-group bb-stack__item bb-form-field bb-form-field--md bb-ewa-conversation-list-filter-panel__filter-field"
+        *ngIf="!filterService.forceUserId"
+      >
+        <bb-search-box-ui
+          data-role="conversation-list-filter-user-input"
+          label="User"
+          i18n-label="
+            User filter field
+            label@@messages.messagesCommon.conversationsListFilterConversation.userLabelText"
+          formControlName="user"
+          placeholder="Search by name"
+          i18n-placeholder="
+            Search by name
+            placeholder@@messages.messagesCommon.conversationsListFilterConversation.searchByNamePlaceholderText"
+          [typeaheadOptions]="typeaheadOptions"
+        ></bb-search-box-ui>
+      </div>
+      <div
+        class="form-group bb-stack__item bb-form-field bb-form-field--md bb-ewa-conversation-list-filter-panel__filter-field"
+      >
+        <bb-input-datepicker-ui
+          data-role="conversation-list-filter-date-input"
+          label="Date"
+          i18n-label="
+            Date label
+            text@@messages.messagesCommon.conversationsListFilterConversation.dateLabelText"
+          formControlName="date"
+          [rangeSelection]="true"
+        ></bb-input-datepicker-ui>
+      </div>
+    </div>
+    <div class="bb-button-bar bb-button-bar--reverse">
+      <button
+        bbButton
+        class="bb-button-bar__button"
+        type="submit"
+        data-role="apply-filter"
+        i18n="
+          Apply@@messages.messagesCommon.conversationsListFilterConversation.applyButtonText"
+      >
+        Apply
+      </button>
+      <button
+        bbButton
+        class="bb-button-bar__button"
+        color="secondary"
+        (click)="resetAndClose()"
+        data-role="close-filter"
+        i18n="
+          Close@@messages.messagesCommon.conversationsListFilterConversation.closeButtonText"
+      >
+        Close
+      </button>
+      <button
+        bbButton
+        class="bb-button-bar__button"
+        color="link"
+        (click)="clear()"
+        data-role="clear-filter"
+        i18n="
+          Clear
+          All@@messages.messagesCommon.conversationsListFilterConversation.clearAllButtonText"
+      >
+        Clear All
+      </button>
+    </div>
+  </form>
+</div>

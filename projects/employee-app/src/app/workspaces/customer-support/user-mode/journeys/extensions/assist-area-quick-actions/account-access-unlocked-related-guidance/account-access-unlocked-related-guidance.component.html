@@ -1,0 +1,112 @@
+<div
+  (click)="expanded = !expanded"
+  id="related-guidance-toggle"
+  data-role="related-guidance__toggle-area"
+  class="bb-block bb-block--lg"
+>
+  <div class="bb-stack">
+    <div
+      i18n="
+        Related guidance (optional) header|The header in the account access
+        unlock account quick action flow for the expando showing optional
+        related guidance for an unlocked user account
+        @@bb-ewa-user-mode.assist-area.account-access.account-access-unlocked-confirmation.related-guidance"
+      class="bb-stack__item"
+      data-role="related-guidance__header"
+      aria-labelledby="related-guidance-toggle"
+    >
+      <span class="font-weight-bold">Related guidance </span>
+      <span class="bb-subtitle bb-text-support">(Optional)</span>
+    </div>
+    <button
+      bbButton
+      type="button"
+      color="link-dark"
+      [circle]="false"
+      buttonSize="sm"
+      class="bb-stack__item bb-stack__item--push-right"
+      data-role="related-guidance__toggle"
+      title="Related guidance"
+      i18n-title="
+        Related guidance header icon|The header icon for the expando showing
+        related guidance for an unlocked account
+        @@bb-ewa-user-mode.assist-area.account-access.account-access-unlocked-confirmation.related-guidance-icon"
+    >
+      <bb-icon-ui
+        [name]="expanded ? 'expand-less' : 'expand-more'"
+        [inverse]="true"
+        size="md"
+      ></bb-icon-ui>
+    </button>
+  </div>
+  <hr />
+</div>
+<div style="overflow: hidden">
+  <div *ngIf="expanded" [@slideInOut] data-role="related-guidance-details">
+    <bb-alert-ui
+      title=""
+      modifier="info"
+      data-role="security-advice-info"
+      i18n="
+        Security advice info banner|Information banner in the reset password
+        quick action flow to remind the user to get confirmation from the
+        customer that they are happy to receive security
+        advice@@bb-ewa-user-mode.assist-area.account-access.account-access-unlocked-confirmation.related-guidance.security-advice-info"
+      >Make sure that they are happy to receive security advice before offering
+      it.</bb-alert-ui
+    >
+    <div>
+      <ul>
+        <li>
+          <div
+            class="bb-block--md"
+            i18n="
+              Unique password guidance text|Text in the account access unlock
+              account quick action flow to recommend that the customer uses a
+              unique password
+              @@bb-ewa-user-mode.assist-area.account-access.account-access-unlocked-confirmation.related-guidance.unlock-text"
+          >
+            Make sure your banking password is different to any other password
+            you use.
+          </div>
+        </li>
+        <li>
+          <div
+            class="bb-block--md"
+            i18n="
+              Don't share password advice text|Text in the account access unlock
+              account quick action flow for the advice to be given to the
+              customer to avoid sharing their password
+              @@bb-ewa-user-mode.assist-area.account-access.account-access-unlocked-confirmation.related-guidance.no-sharing-password-text"
+          >
+            Don't share your password with anyone else.
+          </div>
+        </li>
+        <li>
+          <div
+            class="bb-block--md"
+            i18n="
+              Banking app usage guidance text|Text in the account access unlock
+              account quick action flow to recommend that the customer doesn't
+              use their banking app on others devices
+              @@bb-ewa-user-mode.assist-area.account-access.account-access-unlocked-confirmation.related-guidance.avoid-others-devices-text"
+          >
+            Avoid using your banking app on others devices.
+          </div>
+        </li>
+        <li>
+          <div
+            class="bb-block--md"
+            i18n="
+              Contact us guidance text|Text in the account access unlock account
+              quick action flow to recommend that the customer contact them for
+              any future issues
+              @@bb-ewa-user-mode.assist-area.account-access.account-access-unlocked-confirmation.related-guidance.contact-us-text"
+          >
+            Contact us if you have any issues in the future.
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

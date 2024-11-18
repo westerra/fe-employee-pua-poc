@@ -1,0 +1,44 @@
+<div class="bb-button-bar" *ngIf="!(hideComposeButton | async)">
+  <button
+    bbButton
+    data-role="compose-modal"
+    aria-label="Compose"
+    i18n-aria-label="
+      Compose aria-label@@messages.employeeCreateMessage.composeAriaLabel"
+    i18n="
+      Button title for compose message@@messages.employeeCreateMessage.compose"
+    (click)="openModal()"
+  >
+    Compose
+  </button>
+</div>
+<bb-modal-ui [isOpen]="modalOpened" [modalOptions]="modalOptions">
+  <bb-modal-header-ui>
+    <ng-template bbCustomModalHeader>
+      <bb-header-ui
+        headingType="h3"
+        [heading]="modalHeader | async"
+        [attr.aria-label]="modalHeader | async"
+      >
+      </bb-header-ui>
+    </ng-template>
+  </bb-modal-header-ui>
+  <bb-modal-body-ui>
+    <ng-template bbCustomModalBody>
+      <bb-messages-employee-create-message-form
+        [reset]="resetStream"
+        [debounceTime]="debounceTime | async"
+        [maxAttachmentSize]="maxAttachmentSize | async"
+        [maxSubjectLength]="maxSubjectLength | async"
+        [maxMessageLength]="maxMessageLength | async"
+        [minSearchLength]="minSearchLength | async"
+        [preDefineForm]="
+          modalOpened && (shouldPreDefineUser | async) && preDefineForm
+        "
+        [isPreDefinedUserReadonly]="isPreDefinedUserReadonly | async"
+        [isModalOpen]="modalOpened"
+        (cancel)="closeModal()"
+        (confirm)="closeModal()"
+      ></bb-messages-employee-create-message-form>
+    </ng-template> </bb-modal-body-ui
+></bb-modal-ui>

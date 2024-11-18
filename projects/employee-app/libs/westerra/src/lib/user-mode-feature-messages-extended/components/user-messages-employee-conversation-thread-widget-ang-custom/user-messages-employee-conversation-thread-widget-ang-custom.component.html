@@ -1,0 +1,593 @@
+<div class="card card-lg">
+  <ng-container *ngIf="conversationId | async; else errorState">
+    <ng-container *ngIf="!loading; else loadingState">
+      <ng-container *ngIf="!errorResponse; else errorState">
+        <ng-container
+          *ngIf="
+            (conversation | async)?.messages?.length && conversation
+              | async as conversationData;
+            else emptyState
+          "
+        >
+          <div
+            class="card-header bb-block--md"
+            role="region"
+            aria-label="Conversation details"
+            i18n-aria-label="
+              Conversation
+              details@@messages.messagesEmployeeConversationThread.conversationDetails"
+          >
+            <div class="bb-stack bb-block--md">
+              <button bbButton color="link" (click)="navigateBack()">
+                <bb-icon-ui
+                  [cropped]="true"
+                  name="arrow-{{ isRtl ? 'forward' : 'back' }}"
+                ></bb-icon-ui>
+                <span
+                  i18n="
+                    Back button|Return to list of conversations of specified
+                    view
+                    type@@messages.messagesEmployeeConversationThread.backButton"
+                  >Back to {{ viewTypeTitle | async }}</span
+                >
+              </button>
+              <div
+                class="bb-stack__item--push-right"
+                [ngSwitch]="conversationData.workflowStatus"
+              >
+                <ng-container *ngSwitchCase="'RESOLVED'">
+                  <bb-badge-ui
+                    i18n-text="
+                      Resolved|Badge text if conversation is
+                      resolved@@messages.messagesEmployeeConversationThread.resolvedBadge"
+                    text="Resolved"
+                    color="success"
+                    data-role="conversation-resolved-badge"
+                  >
+                  </bb-badge-ui>
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                  <span
+                    class="bb-text-support"
+                    *ngIf="!conversationData?.assignee?.fullName"
+                    i18n="
+                      Not
+                      assigned@@messages.messagesEmployeeConversationThread.notAssigned"
+                  >
+                    Not assigned
+                  </span>
+                  <div
+                    class="bb-stack"
+                    *ngIf="conversationData?.assignee?.fullName"
+                  >
+                    <div class="bb-stack__item">
+                      <div class="bb-inline-stack">
+                        <bb-icon-ui
+                          class="bb-inline-stack__item"
+                          [cropped]="true"
+                          name="lock"
+                        ></bb-icon-ui>
+                        <span class="bb-inline-stack__item bb-text-semi-bold">
+                          <ng-container
+                            *ngIf="
+                              !conversationData.assignee.isRequester;
+                              else assignedToMe
+                            "
+                            i18n="
+                              Assigned
+                              to@@messages.messagesEmployeeConversationThread.assignedTo"
+                          >
+                            Assigned to {{ conversationData.assignee.fullName }}
+                          </ng-container>
+                        </span>
+                        <ng-template
+                          #assignedToMe
+                          i18n="
+                            Assigned to
+                            me@@messages.messagesEmployeeConversationThread.assignedToMe"
+                        >
+                          Assigned to me
+                        </ng-template>
+                      </div>
+                    </div>
+                    <div class="bb-stack__item">
+                      <div class="bb-button-bar--reverse" class="bb-stack">
+                        <span
+                          bbTooltip="Assign to another user"
+                          i18n-bbTooltip="
+                            Assign to another user|Assign to another user
+                            button@@messages.messagesEmployeeConversationThread.assignToAnotherUserButton"
+                          triggers="hover focus"
+                          container="body"
+                          class="bb-stack__item"
+                        >
+                          <button
+                            bbButton
+                            class="bb-button-bar__button"
+                            data-role="assign-other"
+                            circle="true"
+                            color="link-dark"
+                            (click)="assignToOtherUserModal.open()"
+                            aria-label="Assign to another user"
+                            i18n-aria-label="
+                              @@messages.messagesEmployeeConversationThread.assignToAnotherUserButton"
+                          >
+                            <bb-icon-ui name="edit"></bb-icon-ui>
+                          </button>
+                        </span>
+                        <span
+                          bbTooltip="Unassign"
+                          i18n-bbTooltip="
+                            Unassign|Unassign user button
+                            tooltip@@messages.messagesEmployeeConversationThread.unassignButton"
+                          triggers="hover focus"
+                          container="body"
+                        >
+                          <button
+                            bbButton
+                            class="bb-button-bar__button"
+                            data-role="unassign-button"
+                            circle="true"
+                            color="link-dark"
+                            (click)="
+                              confirmModalService.toggleModal(
+                                true,
+                                manipulationTypes.unassign
+                              )
+                            "
+                            aria-label="Unassign"
+                            i18n-aria-label="
+                              @@messages.messagesEmployeeConversationThread.unassignButton"
+                          >
+                            <bb-icon-ui name="clear"></bb-icon-ui>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+            <div class="bb-stack">
+              <div class="bb-stack__item">
+                <div class="bb-stack bb-stack--align-center">
+                  <div role="heading" aria-level="3">
+                    <span
+                      class="sr-only"
+                      i18n="
+                        Conversation
+                        topic@@messages.messagesEmployeeConversationThread.conversationTopic"
+                      >Topic:</span
+                    >
+                    <bb-badge-ui
+                      class="bb-stack__item"
+                      [text]="conversationData.topic.name"
+                      [color]="
+                        conversationData.topic.deleted ? 'secondary' : 'primary'
+                      "
+                      [breakWord]="true"
+                    >
+                    </bb-badge-ui>
+                    <span
+                      bbTooltip="Edit topic"
+                      i18n-bbTooltip="
+                        Edit topic|Tooltip text for edit topic
+                        button@@messages.messagesEmployeeConversationThread.editTopicButton"
+                      triggers="hover focus"
+                      container="body"
+                      ><button
+                        bbButton
+                        circle="true"
+                        color="link-dark"
+                        class="bb-stack__item"
+                        buttonSize="sm"
+                        data-role="edit-topic-button"
+                        (click)="editTopicModal.open()"
+                        aria-label="Edit topic"
+                        i18n-aria-label="
+                          @@messages.messagesEmployeeConversationThread.editTopicButton"
+                      >
+                        <bb-icon-ui name="edit"></bb-icon-ui></button
+                    ></span>
+                  </div>
+                </div>
+                <div class="bb-stack">
+                  <span
+                    data-role="thread-subject"
+                    role="heading"
+                    aria-level="4"
+                    class="bb-stack__item"
+                  >
+                    <span
+                      class="sr-only"
+                      i18n="
+                        Conversation
+                        subject@@messages.messagesEmployeeConversationThread.conversationSubject"
+                      >Subject:</span
+                    >
+                    <span
+                      class="bb-text-semi-bold break-word"
+                      [innerHTML]="conversationData.subject"
+                    ></span>
+                  </span>
+                  <bb-icon-ui
+                    *ngIf="conversationData.important"
+                    name="error"
+                    color="danger"
+                    [cropped]="true"
+                    class="bb-stack__item"
+                    i18n-bbTooltip="
+                      High priority
+                      text@@messages.messagesEmployeeConversationThread.important.tooltip"
+                    bbTooltip="High priority"
+                    container="body"
+                    triggers="hover"
+                    placement="top"
+                    aria-label="This conversation has high priority"
+                    i18n-aria-label="
+                      High
+                      priority@@messages.messagesEmployeeConversationThread.important"
+                  ></bb-icon-ui>
+                </div>
+              </div>
+              <div class="bb-stack__item--push-right">
+                <div class="bb-button-bar">
+                  <ng-container [ngSwitch]="conversationData.workflowStatus">
+                    <ng-container *ngSwitchCase="'RESOLVED'">
+                      <span
+                        bbTooltip="Mark this conversation as unresolved"
+                        triggers="hover focus"
+                        container="body"
+                        i18n-bbTooltip="
+                          Mark this conversation as unresolved|Tooltip text to
+                          mark conversation as
+                          unresolved@@messages.messagesEmployeeConversationThread.unresolveButton"
+                      >
+                        <button
+                          bbButton
+                          circle="true"
+                          color="link-dark"
+                          data-role="mark-us-resolved"
+                          (click)="
+                            confirmModalService.toggleModal(
+                              true,
+                              manipulationTypes.unresolve
+                            )
+                          "
+                          aria-label="Mark this conversation as unresolved"
+                          i18n-aria-label="
+                            @@messages.messagesEmployeeConversationThread.unresolveButton"
+                        >
+                          <bb-icon-ui name="autorenew"></bb-icon-ui>
+                        </button>
+                      </span>
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>
+                      <ng-container
+                        *ngIf="
+                          !conversationData?.assignee?.fullName;
+                          else otherActions
+                        "
+                      >
+                        <button
+                          bbButton
+                          class="bb-button-bar__button"
+                          color="secondary"
+                          i18n="
+                            Assign to me|Inner text for assign
+                            button@@messages.messagesEmployeeConversationThread.assignButton"
+                          (click)="
+                            confirmModalService.toggleModal(
+                              true,
+                              manipulationTypes.assign
+                            )
+                          "
+                        >
+                          Assign to me
+                        </button>
+                        <button
+                          bbButton
+                          class="bb-button-bar__button"
+                          color="link"
+                          (click)="assignToOtherUserModal.open()"
+                          i18n="
+                            Assign to employee|Text for assign to employee
+                            button@@messages.messagesEmployeeConversationThread.assignToEmployeeButton"
+                        >
+                          Assign to employee
+                        </button>
+                      </ng-container>
+                      <ng-template #otherActions>
+                        <span
+                          bbTooltip="Mark this conversation as resolved"
+                          triggers="hover focus"
+                          container="body"
+                          i18n-bbTooltip="
+                            Mark this conversation as resolved
+                            button@@messages.messagesEmployeeConversationThread.resolvedButton"
+                        >
+                          <button
+                            bbButton
+                            circle="true"
+                            class="bb-button-bar__button"
+                            color="link-dark"
+                            (click)="
+                              confirmModalService.toggleModal(
+                                true,
+                                manipulationTypes.resolve
+                              )
+                            "
+                            aria-label="Mark this conversation as resolved"
+                            i18n-aria-label="
+                              @@messages.messagesEmployeeConversationThread.resolvedButton"
+                          >
+                            <bb-icon-ui name="done"></bb-icon-ui>
+                          </button>
+                        </span>
+                      </ng-template>
+                    </ng-container>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+            <bb-alert-ui
+              role="alert"
+              modifier="warning"
+              [dismissible]="true"
+              *ngIf="conversationData.topic.deleted && !topicAlertClosed"
+              (close)="topicAlertClosed = true"
+              i18n-title="
+                Alert message|Message topic is
+                deleted@@messages.messagesEmployeeConversationThread.alertMessageTopicDeleted.title"
+              title="This topic no longer exists. Contact support for details."
+            ></bb-alert-ui>
+          </div>
+          <div
+            [class.bb-list__item]="replyOpened"
+            role="list"
+            aria-label="Messages list"
+            i18n-aria-label="
+              Messages
+              list@@messages.messagesEmployeeConversationThread.conversationMessagesList"
+          >
+            <bb-messages-conversation-message
+              *ngFor="let message of conversationData.messages; let last = last"
+              [sender]="!message.isMyMessage ? message.sender.name : me"
+              [created]="message.createdAt"
+              [message]="message.body"
+              [opened]="last"
+              [attachments]="message.attachments"
+              role="listitem"
+              aria-label="Message"
+              i18n-aria-label="
+                Message@@messages.messagesEmployeeConversationThread.conversationMessage"
+            >
+            </bb-messages-conversation-message>
+          </div>
+          <div class="card-footer" *ngIf="!conversationData['read-only']">
+            <form [formGroup]="replyFormGroup">
+              <div
+                class="bb-block--xl"
+                [attr.id]="id + 'reply-container'"
+                [hidden]="!replyOpened"
+              >
+                <div class="form-group">
+                  <bb-rich-text-editor-ui
+                    #richTextEditor
+                    i18n-placeholder="
+                      Write your
+                      message@@messages.messagesEmployeeConversationThread.message.placeholder"
+                    placeholder="Write your message"
+                    i18n-label="
+                      Message@@messages.messagesEmployeeConversationThread.message.label"
+                    label="Message"
+                    aria-describedby="employee-conversation-thread-body-error"
+                    formControlName="body"
+                    [counter]="true"
+                    [actions]="editorActions"
+                    [maxLength]="replyMessageMaxLength | async"
+                    [required]="true"
+                  >
+                  </bb-rich-text-editor-ui>
+                  <bb-input-validation-message-ui
+                    id="employee-conversation-thread-body-error"
+                    [showErrors]="isInvalidControl('body')"
+                  >
+                    <span
+                      *ngIf="hasError('body', 'required')"
+                      i18n="
+                        Error message if field is
+                        required@@messages.messagesConversationThread.errors.messageRequired"
+                    >
+                      Field is required
+                    </span>
+                  </bb-input-validation-message-ui>
+                </div>
+                <div class="form-group">
+                  <bb-messages-upload-attachments
+                    [maxSize]="maxAttachmentSize | async"
+                    formControlName="attachments"
+                  >
+                  </bb-messages-upload-attachments>
+                </div>
+              </div>
+              <div class="bb-button-bar bb-button-bar--reverse">
+                <bb-load-button-ui
+                  *ngIf="replyOpened"
+                  class="bb-button-bar__button"
+                  type="submit"
+                  data-role="submit"
+                  i18n="
+                    Send@@messages.messagesEmployeeConversationThread.sendButton"
+                  [isLoading]="formLoading"
+                  (click)="reply()"
+                >
+                  Send
+                </bb-load-button-ui>
+                <bb-button-ui
+                  class="bb-button-bar__button"
+                  color="secondary"
+                  [attr.data-role]="!replyOpened ? 'reply-btn' : 'discard-btn'"
+                  [attr.aria-expanded]="replyOpened"
+                  [attr.aria-controls]="id + 'reply-container'"
+                  (click)="
+                    !replyOpened
+                      ? toggleReplyForm(true)
+                      : confirmModalService.toggleModal(
+                          true,
+                          manipulationTypes.discard,
+                          replyFormGroup
+                        )
+                  "
+                >
+                  <span
+                    i18n="
+                      Reply@@messages.messagesEmployeeConversationThread.replyButton"
+                    *ngIf="!replyOpened; else discardTextButton"
+                    >Reply</span
+                  >
+                  <ng-template #discardTextButton>
+                    <span
+                      i18n="
+                        Discard@@messages.messagesEmployeeConversationThread.discardButton"
+                      >Discard</span
+                    >
+                  </ng-template>
+                </bb-button-ui>
+              </div>
+            </form>
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</div>
+<ng-template #me>
+  <span
+    i18n="
+      Me|Show this string if this is clients
+      message@@messages.messagesEmployeeConversationThread.me"
+    >Me</span
+  ></ng-template
+><ng-template #emptyState>
+  <div class="bb-state-container">
+    <bb-empty-state-ui
+      data-role="empty-state"
+      i18n-title="
+        Empty state
+        title@@messages.messagesEmployeeConversationThread.emptyState.title"
+      title="No Messages"
+      i18n-subtitle="
+        Empty state
+        subtitle@@messages.messagesEmployeeConversationThread.emptyState.subtitle"
+      subtitle="You don't have any messages to be displayed."
+      iconModifier="email"
+      iconColor="muted"
+    >
+    </bb-empty-state-ui></div></ng-template
+><ng-template #errorState>
+  <bb-messages-request-error
+    [error]="errorResponse"
+  ></bb-messages-request-error></ng-template
+><ng-template #loadingState>
+  <bb-loading-indicator-ui
+    class="py-4"
+    loaderSize="md"
+  ></bb-loading-indicator-ui></ng-template
+><bb-messages-manipulation-confirm-modal
+  [isOpen]="confirmationModal.opened"
+  [type]="confirmationModal.type"
+  (cancel)="confirmModalService.toggleModal(false)"
+  (confirm)="confirmConfirmationModal()"
+></bb-messages-manipulation-confirm-modal
+><bb-messages-assign-other-user-ui
+  [isOpen]="assignToOtherUserModal.opened"
+  [assignee]="(conversation | async)?.assignee"
+  [minSearchLength]="minSearchLength | async"
+  (cancel)="assignToOtherUserModal.cancel()"
+  (confirm)="assignToOtherUserModal.confirm($event)"
+></bb-messages-assign-other-user-ui
+><bb-messages-edit-topic-modal-ui
+  [isOpen]="editTopicModal.opened"
+  [currentTopicId]="(conversation | async)?.topic.id"
+  (cancel)="editTopicModal.cancel()"
+  (confirm)="editTopicModal.confirm($event)"
+></bb-messages-edit-topic-modal-ui
+><ng-template #conversationRenewSuccess>
+  <span
+    i18n="
+      Conversation has been successfully renewed from resolved and assigned to
+      you.@@messages.messagesEmployeeConversationThread.converastionRenewSuccess"
+    >Conversation has been successfully renewed from resolved and assigned to
+    you.</span
+  ></ng-template
+><ng-template #conversationResolutionSuccess>
+  <span
+    i18n="
+      Conversation has been successfully marked as
+      resolved.@@messages.messagesEmployeeConversationThread.converastionResolutionSuccess"
+    >Conversation has been successfully marked as resolved.</span
+  ></ng-template
+><ng-template
+  #conversationUnassignmentSuccess
+  *ngIf="conversation | async as conversation"
+>
+  <ng-container *ngIf="conversation.unassignedFrom; else unassignedFromYou">
+    <span
+      i18n="
+        Conversation has been successfully unassigned from
+        you.@@messages.messagesEmployeeConversationThread.conversationUnassignmentSuccess"
+      >Conversation has been successfully unassigned from
+    </span>
+    <span>{{ conversation.unassignedFrom }}.</span>
+  </ng-container>
+  <ng-template #unassignedFromYou>
+    <span
+      i18n="
+        Conversation has been successfully unassigned from
+        you@@messages.messagesEmployeeConversationThread.conversationUnassignmentFromYouSuccess"
+      >Conversation has been successfully unassigned from you.</span
+    >
+  </ng-template></ng-template
+><ng-template
+  #conversationAssignmentSuccess
+  *ngIf="conversation | async as conversation"
+>
+  <ng-container
+    *ngIf="
+      conversation.assignee && !conversation?.assignee?.isRequester;
+      else assignedToYou
+    "
+  >
+    <span
+      i18n="
+        Conversation has been successfully assigned
+        to@@messages.messagesEmployeeConversationThread.conversationAssignmentSuccess"
+      >Conversation has been successfully assigned to
+    </span>
+    <span>{{ conversation.assignee.fullName }}.</span>
+  </ng-container>
+  <ng-template #assignedToYou
+    ><span
+      i18n="
+        Conversation has been successfully assigned to
+        you@@messages.messagesEmployeeConversationThread.conversationAssignmentToYouSuccess"
+      >Conversation has been successfully assigned to you.</span
+    ></ng-template
+  ></ng-template
+><ng-template #conversationReplySuccess>
+  <span
+    i18n="
+      Your message has been successfully sent.|Text of successful send
+      message@@messages.messagesEmployeeConversationThread.conversationReplySuccess"
+    >Your message has been successfully sent.</span
+  ></ng-template
+><ng-template #conversationDeleteSuccess>
+  <span
+    i18n="
+      Your conversation has been successfully deleted.|Text of successful
+      deletion of the
+      conversation@@messages.messagesEmployeeConversationThread.conversationDeleteSuccess"
+    >Your conversation has been successfully deleted.</span
+  ></ng-template
+>

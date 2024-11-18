@@ -1,0 +1,182 @@
+<div class="bb-ewa-overflow-auto">
+  <table class="table table-hover" data-role="conversation-list">
+    <caption
+      i18n="
+        The caption for the conversation list table|The caption for the table
+        showing a list of conversations between employee and customers
+        @@bb-ewa.shared-feature-message-center.conversation-list-table.caption"
+      class="sr-only"
+    >
+      Conversation list table
+    </caption>
+    <thead>
+      <tr>
+        <th data-role="importance-column" scope="col"></th>
+        <th
+          data-role="sender-name-column"
+          scope="col"
+          i18n="
+            Customer|The name of the table head cell called
+            'Customer'@@messages.messagesConversationsListEmployee.messagesTableEmployee.headerFrom"
+        >
+          Customer
+        </th>
+        <th data-role="attachments-column" scope="col"></th>
+        <th
+          data-role="subject-column"
+          scope="col"
+          i18n="
+            Subject|The name of the table head cell called
+            'Subject'@@messages.messagesConversationsListEmployee.messagesTableEmployee.headerSubject"
+        >
+          Subject
+        </th>
+        <th
+          data-role="topic-name-column"
+          scope="col"
+          i18n="
+            Topic|The name of the table head cell called
+            'Topic'@@messages.messagesConversationsListEmployee.messagesTableEmployee.headerTopic"
+        >
+          Topic
+        </th>
+        <th
+          data-role="date-column"
+          scope="col"
+          i18n="
+            Date & Time|The name of the table head cell called 'Date &
+            Time'@@messages.messagesConversationsListEmployee.messagesTableEmployee.headerDate"
+        >
+          Date & Time
+        </th>
+        <th data-role="resolution-column" scope="col"></th>
+        <th
+          data-role="assigned-to-column"
+          scope="col"
+          i18n="
+            Assigned to|The name of the table head cell called 'Assigned
+            to'@@messages.messagesConversationsListEmployee.messagesTableEmployee.assignedTo"
+        >
+          Assigned to
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let conversation of conversations"
+        attr.data-role="conversation-{{ conversation.id }}"
+        attr.aria-label="customer: {{
+          conversation.client.fullName
+        }},        subject: {{ conversation.subject }},        {{
+          conversation.important ? 'High priority' : ''
+        }},        topic: {{ conversation.topic.name }},        date: {{
+          conversation.timestamp | date
+        }}"
+        i18n-attr.aria-label="
+          Conversation row aria
+          label@@messages.messagesConversationsListEmployee.messagesTable.conversationRowAriaLabel"
+        tabindex="0"
+        (click)="openConversation(conversation.id)"
+        (keydown.enter)="openConversation(conversation.id)"
+        [ngClass]="{
+          'table-active bb-text-semi-bold':
+            highlightUnread && !conversation.read
+        }"
+      >
+        <td data-role="importance-cell">
+          <div class="d-flex align-items-center">
+            <bb-icon-ui
+              *ngIf="conversation.important"
+              name="error"
+              color="danger"
+              aria-label="High priority"
+              i18n-aria-label="
+                High
+                priority@@messages.messagesConversationsListEmployee.messagesTable.importantMessageAriaLabelText"
+              i18n-bbTooltip="
+                High
+                priority@@messages.messagesConversationsListEmployee.messagesTable.importantMessageTooltipText"
+              bbTooltip="High priority"
+              container="body"
+              triggers="hover"
+              placement="bottom"
+            ></bb-icon-ui>
+          </div>
+        </td>
+        <td class="break-word" data-role="sender-name-cell">
+          {{ conversation.client.fullName }}
+        </td>
+        <td data-role="attachments-cell">
+          <div class="d-flex align-items-center">
+            <bb-icon-ui
+              *ngIf="conversation.hasAttachments"
+              aria-label="Has attachments"
+              i18n-aria-label="
+                Has
+                attachments@@messages.messagesConversationsListEmployee.messagesTable.hasAttachmentsAriaLabelText"
+              class="bb-text-support"
+              name="attachment"
+            ></bb-icon-ui>
+          </div>
+        </td>
+        <td
+          class="break-word"
+          data-role="subject-cell"
+          [innerHTML]="conversation.subject"
+        ></td>
+        <td data-role="topic-name-cell">
+          <div class="d-flex align-items-center">
+            <bb-badge-ui
+              [text]="conversation.topic.name"
+              [color]="conversation.topic.deleted ? 'secondary' : 'primary'"
+            ></bb-badge-ui>
+            <bb-icon-ui
+              *ngIf="conversation.topic.deleted"
+              name="warning"
+              color="warning"
+              class="ml-1"
+              aria-label="This topic no longer exists. Contact support for details."
+              i18n-aria-label="
+                This topic no longer exists. Contact support for
+                details.@@messages.messagesConversationsListEmployee.messagesTable.deletedTopicTooltipText"
+              i18n-bbTooltip="
+                This topic no longer exists. Contact support for
+                details.@@messages.messagesConversationsListEmployee.messagesTable.deletedTopicTooltipText"
+              bbTooltip="This topic no longer exists. Contact support for details."
+              container="body"
+              triggers="hover"
+              placement="bottom"
+            ></bb-icon-ui>
+          </div>
+        </td>
+        <td data-role="date-cell">
+          {{ conversation.timestamp | date : "short" }}
+        </td>
+        <td data-role="resolution-cell">
+          <bb-badge-ui
+            color="success"
+            text="R"
+            i18n-text="
+              Resolved badge|Text in badge if conversation is
+              resolved@@bb-ewa-shared-feature-message-center.conversation-list-table.resolved-badge"
+            aria-label="Resolved"
+            i18n-aria-label="
+              Resolved|Tooltip message if conversation is
+              resolved@@messages.messagesConversationsListEmployee.messagesTable.resolvedConversationTooltipText"
+            bbTooltip="Resolved"
+            i18n-bbTooltip="
+              Resolved|Tooltip message if conversation is
+              resolved@@messages.messagesConversationsListEmployee.messagesTable.resolvedConversationTooltipText"
+            container="body"
+            triggers="hover"
+            placement="bottom"
+            *ngIf="conversation.resolved"
+          ></bb-badge-ui>
+        </td>
+        <td data-role="assigned-to-cell">
+          {{ conversation.assignee?.fullName }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

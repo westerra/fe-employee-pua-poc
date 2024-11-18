@@ -1,0 +1,516 @@
+<div class="card bb-block bb-block--lg">
+  <bb-header-ui
+    headingType="h2"
+    class="card-header"
+    data-role="admin-user-details-title"
+    i18n-heading="
+      User details title|Label text for user
+      details@@bb-user-profile-features.admin-user-details-view.header-text.user-details"
+    heading="User details"
+  >
+  </bb-header-ui>
+  <bb-loading-indicator-ui
+    *ngIf="loadingState$$ | async"
+    i18n-text="
+      User Details loading message|Message for when the user details are
+      loading@@bb-user-profile-features.admin-user-details-view.loading-indicator-text.loading"
+    text="Loading..."
+  >
+  </bb-loading-indicator-ui>
+  <bb-common-error-state-ui
+    *ngIf="loadingErrorState$$ | async"
+    class="bb-state-container"
+    [error]="(loadingErrorState$$ | async) || ''"
+  >
+  </bb-common-error-state-ui>
+  <ng-container
+    *ngIf="
+      (loadingState$$ | async) === false &&
+      (loadingErrorState$$ | async) === undefined &&
+      userDetails
+    "
+  >
+    <ng-container *ngIf="!hasState(formStates.FullName); else manageFullName">
+      <div class="card-section">
+        <div class="bb-stack">
+          <div class="bb-stack__item bb-stack__item--fill">
+            <div class="bb-stack bb-stack--wrap">
+              <span
+                class="bb-stack__item bb-text-bold"
+                i18n="
+                  User details full name label|Label text for full
+                  name@@bb-user-profile-features.admin-user-details-view.label-text.full-name"
+              >
+                Full name
+              </span>
+              <div class="bb-stack__break bb-stack__break--sm-down"></div>
+              <span
+                class="bb-stack__item bb-stack__item--fill bb-text-align-end bb-text-align-start--sm-down break-word"
+                data-role="admin-user-details-full-name"
+              >
+                {{ userDetails.fullName }}
+              </span>
+            </div>
+          </div>
+          <button
+            bbButton
+            class="bb-stack__item"
+            i18n="
+              User details full name manage button|Label text for full name
+              manage
+              button@@bb-user-profile-features.admin-user-details-view.full-name-manage-button-text.manage"
+            data-role="admin-user-details-full-name-manage"
+            color="link"
+            buttonSize="sm"
+            [disabled]="currentState !== formStates.None"
+            (click)="setManagementState(formStates.FullName)"
+            attr.aria-label="Manage full name, {{ userDetails.fullName }}"
+            i18n-attr.aria-label="
+              User details full name manage button aria
+              label@@bb-user-profile-features.admin-user-details-view.button-aria-label.manage-full-name"
+          >
+            Manage
+          </button>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #manageFullName>
+      <div class="card-section card-section--highlight">
+        <bb-identity-admin-user-details-full-name-form
+          [givenName]="userDetails.givenName"
+          [familyName]="userDetails.familyName"
+          [isSubmitting]="(isSubmitting$$ | async) || false"
+          (saveClick)="handleSaveRequest($event)"
+          (closeClick)="setManagementState(formStates.None)"
+        >
+        </bb-identity-admin-user-details-full-name-form>
+      </div>
+    </ng-template>
+    <div class="card-section">
+      <div class="bb-stack">
+        <div class="bb-stack__item bb-stack__item--fill">
+          <div class="bb-stack bb-stack--wrap">
+            <span
+              class="bb-text-bold bb-stack__item"
+              i18n="
+                User details username label|Label text for
+                username@@bb-user-profile-features.admin-user-details-view.label-text.username"
+            >
+              Username
+            </span>
+            <div class="bb-stack__break bb-stack__break--sm-down"></div>
+            <span
+              class="bb-stack__item bb-stack__item--fill bb-text-align-end bb-text-align-start--sm-down break-word"
+              data-role="admin-user-details-username"
+            >
+              {{ userDetails.externalId }}
+            </span>
+          </div>
+        </div>
+        <button
+          bbButton
+          class="bb-stack__item invisible"
+          i18n="
+            User details username manage button|Label text for username manage
+            button@@bb-user-profile-features.admin-user-details-view.manage-username-button-text.manage"
+          data-role="admin-user-details-username-manage"
+          buttonSize="sm"
+          color="link"
+          attr.aria-label="Manage username, {{ userDetails.externalId }}"
+          i18n-attr.aria-label="
+            User details username manage button aria
+            label@@bb-user-profile-features.admin-user-details-view.username-manage-button-aria-label.manage-username"
+        >
+          Manage
+        </button>
+      </div>
+    </div>
+    <ng-container *ngIf="!configService.identitySyncEnabled">
+      <ng-container
+        *ngIf="
+          !hasState(formStates.EmailAddress);
+          then showEmailAddress;
+          else manageEmailAddress
+        "
+      ></ng-container>
+      <ng-container
+        *ngIf="
+          !hasState(formStates.MobileNumber);
+          then showMobileNumber;
+          else manageMobileNumber
+        "
+      ></ng-container>
+    </ng-container>
+    <ng-template #showEmailAddress>
+      <div class="card-section">
+        <div class="bb-stack">
+          <div class="bb-stack__item bb-stack__item--fill">
+            <div class="bb-stack bb-stack--wrap">
+              <span
+                class="bb-text-bold bb-stack__item"
+                i18n="
+                  User details email address label|Label text for email
+                  address@@bb-user-profile-features.admin-user-details-view.label-text.email-address"
+              >
+                Email address
+              </span>
+              <bb-badge-ui
+                *ngIf="userDetails.emailVerified"
+                class="bb-stack__item"
+                color="success"
+                data-role="admin-user-details-verified"
+                i18n-text="
+                  Verified|Text for verified email address
+                  badge@@bb-user-profile-features.admin-user-details-view.badge-text.verified"
+                text="Verified"
+              >
+              </bb-badge-ui>
+              <bb-badge-ui
+                *ngIf="!userDetails.emailVerified"
+                class="bb-stack__item"
+                color="warning"
+                data-role="admin-user-details-not-verified"
+                i18n-text="
+                  Unverified|Text for verified email address
+                  badge@@bb-user-profile-features.admin-user-details-view.badge-text.unverified"
+                text="Unverified"
+              >
+              </bb-badge-ui>
+              <div class="bb-stack__break bb-stack__break--sm-down"></div>
+              <span
+                class="bb-stack__item bb-stack__item--fill bb-text-align-end bb-text-align-start--sm-down break-word"
+                data-role="admin-user-details-email"
+              >
+                {{ userDetails.emailAddress }}
+              </span>
+            </div>
+          </div>
+          <button
+            bbButton
+            class="bb-stack__item"
+            data-role="admin-user-details-email-address-manage"
+            i18n="
+              User details email address manage button|Label text for email
+              address manage
+              button@@bb-user-profile-features.admin-user-details-view.email-address-manage-button-text.manage"
+            color="link"
+            buttonSize="sm"
+            [disabled]="currentState !== formStates.None"
+            (click)="setManagementState(formStates.EmailAddress)"
+            attr.aria-label="Manage email address, {{
+              userDetails.emailAddress
+            }}"
+            i18n-attr.aria-label="
+              User details email address manage button aria
+              label@@bb-user-profile-features.admin-user-details-view.email-address-manage-button-aria-label.manage-email-address"
+          >
+            Manage
+          </button>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template #manageEmailAddress>
+      <div class="card-section card-section--highlight">
+        <bb-identity-admin-user-details-email-form
+          [emailValue]="userDetails.emailAddress"
+          [isSubmitting]="(isSubmitting$$ | async) || false"
+          (saveClick)="handleSaveRequest($event)"
+          (closeClick)="setManagementState(formStates.None)"
+        >
+        </bb-identity-admin-user-details-email-form>
+      </div>
+    </ng-template>
+    <ng-template #showMobileNumber>
+      <div class="card-section" data-role="admin-user-details-mobile">
+        <div class="bb-stack">
+          <div class="bb-stack__item bb-stack__item--fill">
+            <div class="bb-stack bb-stack--wrap">
+              <span
+                class="bb-text-bold bb-stack__item"
+                i18n="
+                  User details mobile number label|Label text for full
+                  name@@bb-user-profile-features.admin-user-details-view.label-text.mobile-number"
+              >
+                Mobile number
+              </span>
+              <div class="bb-stack__break bb-stack__break--sm-down"></div>
+              <div
+                class="bb-stack__item bb-stack__item--fill bb-text-align-end bb-text-align-start--sm-down break-word"
+                data-role="admin-user-details-username"
+              >
+                <ng-container
+                  *ngIf="userDetails.mobileNumber; else phoneNumberNotProvided"
+                >
+                  <ng-container
+                    *ngIf="
+                      configService.enablePhoneNumberFormatter !== false;
+                      then chooseTemplate;
+                      else defaultPhoneNumber
+                    "
+                  ></ng-container>
+                  <ng-template #chooseTemplate>
+                    <ng-container
+                      *ngIf="
+                        configService.enablePhoneNumberFormatter;
+                        then inputTemplate
+                      "
+                    ></ng-container>
+                  </ng-template>
+                  <ng-template #inputTemplate>
+                    <ng-container
+                      *ngIf="
+                        configService.phoneNumberCountryCode;
+                        let countryCode;
+                        else: defaultPhoneNumber
+                      "
+                    >
+                      &lrm;{{
+                        userDetails.mobileNumber | phoneNumber : countryCode
+                      }}
+                    </ng-container>
+                  </ng-template>
+                  <ng-template #defaultPhoneNumber>
+                    &lrm;{{ userDetails.mobileNumber }}
+                  </ng-template>
+                </ng-container>
+                <ng-template #phoneNumberNotProvided>
+                  <span
+                    class="text-muted"
+                    i18n="
+                      User details mobile number empty text|Text when no mobile
+                      number is
+                      empty@@bb-user-profile-features.admin-user-details-view.mobile-number-text.empty"
+                  >
+                    Not provided
+                  </span>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <button
+            bbButton
+            class="bb-stack__item"
+            data-role="admin-user-details-mobile-number-manage"
+            i18n="
+              User details mobile number manage button|Label text for mobile
+              number manage
+              button@@bb-user-profile-features.admin-user-details-view.manage-mobile-number-button-text.manage"
+            color="link"
+            buttonSize="sm"
+            [disabled]="currentState !== formStates.None"
+            (click)="setManagementState(formStates.MobileNumber)"
+            attr.aria-label="Manage mobile number, {{
+              userDetails.mobileNumber
+            }}"
+            i18n-attr.aria-label="
+              User details mobile number manage button aria
+              label@@bb-user-profile-features.admin-user-details-view.manage-mobile-number-button-aria-label.manage-mobile"
+          >
+            Manage
+          </button>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template #manageMobileNumber>
+      <div class="card-section card-section--highlight">
+        <bb-identity-admin-user-details-mobile-form
+          [mobileValue]="userDetails.mobileNumber || ''"
+          [phoneNumberCountryCode]="configService.phoneNumberCountryCode"
+          [phoneNumberDebounceTime]="configService.phoneNumberDebounceTime"
+          [enablePhoneNumberFormatter]="
+            configService.enablePhoneNumberFormatter
+          "
+          [isSubmitting]="(isSubmitting$$ | async) || false"
+          (saveClick)="handleSaveRequest($event)"
+          (closeClick)="setManagementState(formStates.None)"
+        >
+        </bb-identity-admin-user-details-mobile-form>
+      </div>
+    </ng-template>
+    <div class="card-section" *ngIf="legalEntityDetails">
+      <div class="bb-stack">
+        <div class="bb-stack__item bb-stack__item--fill">
+          <div class="bb-stack bb-stack--wrap">
+            <span
+              class="bb-text-bold bb-stack__item"
+              i18n="
+                User details legal entity label|Label text for legal
+                entity@@bb-user-profile-features.admin-user-details-view.label-text.legal-entity"
+            >
+              Legal entity
+            </span>
+            <div class="bb-stack__break bb-stack__break--sm-down"></div>
+            <span
+              class="bb-stack__item bb-stack__item--fill bb-text-align-end bb-text-align-start--sm-down break-word"
+              data-role="admin-user-details-legal-entity"
+            >
+              {{ legalEntityDetails.name }}
+            </span>
+          </div>
+        </div>
+        <button
+          bbButton
+          class="bb-stack__item invisible"
+          i18n="
+            User details legal entity manage button|Label text for legal entity
+            manage
+            button@@bb-user-profile-features.admin-user-details-view.legal-entity-button-text.manage"
+          data-role="admin-user-details-legal-entity-manage"
+          buttonSize="sm"
+          color="link"
+          attr.aria-label="Manage legal entity, {{ legalEntityDetails.name }}"
+          i18n-attr.aria-label="
+            User details legal entity manage button aria
+            label@@bb-user-profile-features.admin-user-details-view.legal-entity-button-aria-label.manage-legal-entity"
+        >
+          Manage
+        </button>
+      </div>
+    </div>
+    <div class="card-section">
+      <div class="bb-stack">
+        <div class="bb-stack__item bb-stack__item--fill">
+          <div class="bb-stack bb-stack--wrap">
+            <span
+              class="bb-text-bold bb-stack__item"
+              i18n="
+                User details date created label|Label text for date
+                created@@bb-user-profile-features.admin-user-details-view.label-text.date-created"
+            >
+              Date created
+            </span>
+            <div class="bb-stack__break bb-stack__break--sm-down"></div>
+            <span
+              class="bb-stack__item bb-stack__item--fill bb-text-align-end bb-text-align-start--sm-down break-word"
+              data-role="admin-user-details-date-created"
+            >
+              {{ userDetails.createdDate | date : "d MMM yyyy, HH:mm" }}
+            </span>
+          </div>
+        </div>
+        <button
+          bbButton
+          class="bb-stack__item invisible"
+          i18n="
+            User details date created button|Label text for date created
+            button@@bb-user-profile-features.admin-user-details-view.date-created-button-text.manage"
+          data-role="admin-user-details-date-created-manage"
+          buttonSize="sm"
+          color="link"
+        >
+          Manage
+        </button>
+      </div>
+    </div>
+
+    <!-- Custom fields being displayed in user's profile details -->
+    <ng-container *ngIf="userProfile">
+      <div class="card-section">
+        <div class="bb-stack">
+          <div class="bb-stack__item bb-stack__item--fill">
+            <div class="bb-stack bb-stack--wrap">
+              <span
+                class="bb-text-bold bb-stack__item"
+                i18n="
+                  Member Number used for user registration|Label text for Member
+                  Number
+                  @@bb-user-profile-features.admin-user-details-view.label-text.member-number"
+              >
+                Member Number
+              </span>
+              <div class="bb-stack__break bb-stack__break--sm-down"></div>
+              <span
+                class="bb-stack__item bb-stack__item--fill bb-text-align-end bb-text-align-start--sm-down break-word"
+                data-role="admin-user-details-member-number"
+              >
+                {{ userProfile?.additions?.customerCode }}
+              </span>
+            </div>
+          </div>
+          <button
+            bbbutton=""
+            data-role="admin-user-details-member-number-manage"
+            buttonsize="sm"
+            color="link"
+            class="bb-stack__item invisible btn-link btn-sm btn"
+            ng-reflect-button-size="sm"
+            ng-reflect-color="link"
+            type="button"
+          >
+            Manage
+          </button>
+        </div>
+      </div>
+
+      <div class="card-section">
+        <div class="bb-stack">
+          <div class="bb-stack__item bb-stack__item--fill">
+            <div class="bb-stack bb-stack--wrap">
+              <span
+                class="bb-text-bold bb-stack__item"
+                i18n="
+                  SSN used for user registration|Label text for SSN Number
+                  @@bb-user-profile-features.admin-user-details-view.label-text.ssn"
+              >
+                SSN
+              </span>
+              <div class="bb-stack__break bb-stack__break--sm-down"></div>
+              <span
+                class="bb-stack__item bb-stack__item--fill bb-text-align-end bb-text-align-start--sm-down break-word"
+                data-role="admin-user-details-ssn"
+              >
+                {{ userProfile?.additions?.['SSN'] }}
+              </span>
+            </div>
+          </div>
+          <button
+            bbbutton=""
+            data-role="admin-user-details-ssn-manage"
+            buttonsize="sm"
+            color="link"
+            class="bb-stack__item invisible btn-link btn-sm btn"
+            ng-reflect-button-size="sm"
+            ng-reflect-color="link"
+            type="button"
+          >
+            Manage
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>
+<ng-template #notificationUpdateSuccess>
+  <span
+    data-role="admin-user-details-success-notification"
+    i18n="
+      Update notification|Notification text for when item
+      updated@@bb-user-profile-features.admin-user-details-view.notification.update-success"
+  >
+    Changes saved successfully
+  </span></ng-template
+><ng-template #notificationFailure let-errorCode="errorCode">
+  <span
+    data-role="admin-user-details-failure-notification"
+    [ngSwitch]="errorCode"
+  >
+    <ng-container
+      *ngSwitchCase="'user.identity.message.IDENTITY_EMAIL_ALREADY_EXISTS'"
+      i18n="
+        Email exists notification|Notification text for when update action
+        failed due to an existing
+        email@@bb-user-profile-features.admin-user-details-view.notification.email-exists"
+    >
+      An Identity with this email already exists.
+    </ng-container>
+    <ng-container
+      *ngSwitchDefault
+      i18n="
+        Action failed notification|Notification text for when update action
+        failed@@bb-user-profile-features.admin-user-details-view.notification.update-failed"
+    >
+      Something went wrong. Please try again or contact support if the issue
+      persists
+    </ng-container>
+  </span></ng-template
+>

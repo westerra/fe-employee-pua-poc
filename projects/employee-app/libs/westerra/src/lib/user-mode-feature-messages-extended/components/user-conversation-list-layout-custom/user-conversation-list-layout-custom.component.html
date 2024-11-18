@@ -1,0 +1,124 @@
+<div class="card card-lg bb-block bb-block--xl">
+  <div class="card-body">
+    <div class="bb-block bb-block--sm">
+      <div class="bb-stack">
+        <div class="bb-stack__item" *ngIf="showFilters">
+          <div class="bb-button-bar bb-button-bar--reverse">
+            <button
+              bbButton
+              data-role="filter-panel-toggle"
+              class="bb-button-bar__button"
+              [class.active]="showFilterPanel"
+              [color]="filterApplied ? 'primary' : 'secondary'"
+              aria-label="Filter"
+              i18n-aria-label="
+                Filter aria label
+                text@@messages.messagesCommon.conversationsListFilterConversation.filterAriaLabelText"
+              (click)="showFilterPanel = !showFilterPanel"
+            >
+              <bb-icon-ui [cropped]="true" name="filter"></bb-icon-ui>
+              <span
+                *ngIf="filterApplied; else filtersTextDefault"
+                i18n="
+                  Filters applied|Text for filter button if filter was
+                  applied@@messages.messagesCommon.conversationsListFilterConversation.filtersAppliedText"
+              >
+                Filters applied
+              </span>
+              <ng-template #filtersTextDefault>
+                <span
+                  i18n="
+                    Filters|Text for filter button if filter has not been
+                    applied@@messages.messagesCommon.conversationsListFilterConversation.filtersText"
+                >
+                  Filters
+                </span>
+              </ng-template>
+            </button>
+            <button
+              bbButton
+              data-role="conversation-list-clear-filters-button"
+              *ngIf="filterApplied"
+              class="bb-button-bar__button"
+              color="link"
+              (click)="reset()"
+              i18n="
+                Clear
+                filters@@messages.messagesCommon.conversationsListFilterConversation.clearFiltersButtonText"
+            >
+              Clear filters
+            </button>
+          </div>
+        </div>
+        <div class="bb-stack__item--push-right">
+          <div class="bb-button-bar">
+            <button
+              bbButton
+              data-role="conversation-list-refresh-button"
+              class="bb-button-bar__button"
+              color="secondary"
+              circle="true"
+              aria-label="Refresh"
+              i18n-aria-label="
+                Refresh aria
+                label@@messages.messagesConversationsListEmployee.refreshButtonAriaLabel"
+              (click)="refresh()"
+            >
+              <bb-icon-ui name="loading"></bb-icon-ui>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <bb-ewa-conversation-list-filter-panel-custom
+      *ngIf="showFilters"
+      [visible]="showFilterPanel"
+      [applied]="filterApplied"
+      [filterParams]="filterParams"
+      (dismiss)="showFilterPanel = false"
+    ></bb-ewa-conversation-list-filter-panel-custom>
+
+    <div class="bb-block bb-block--lg">
+      <bb-loading-indicator-ui
+        *ngIf="loadingEvent.loading"
+        class="bb-state-container"
+        loaderSize="md"
+      ></bb-loading-indicator-ui>
+      <bb-common-error-state-ui
+        *ngIf="loadingEvent.error"
+        [error]="loadingEvent.error"
+      ></bb-common-error-state-ui>
+
+      <bb-ewa-conversation-list-table-custom
+        *ngIf="loadingEvent.conversations && loadingEvent.conversations.length"
+        [conversations]="loadingEvent.conversations"
+      ></bb-ewa-conversation-list-table-custom>
+
+      <bb-empty-state-ui
+        *ngIf="loadingEvent.conversations && !loadingEvent.conversations.length"
+        class="bb-state-container"
+        i18n-title="
+          Empty state
+          title@@messages.messagesConversationsListEmployee.emptyStateTitle"
+        title="No Conversations"
+        i18n-subtitle="
+          Empty state
+          subtitle@@messages.messagesConversationsListEmployee.emptyStateSubtitle"
+        subtitle="You don't have any conversations to be displayed."
+        iconModifier="email"
+        iconColor="muted"
+      ></bb-empty-state-ui>
+    </div>
+    <bb-pagination-ui
+      class="bb-pagination"
+      data-role="conversation-list-pagination"
+      [page]="filterParams?.from || 0"
+      [totalItems]="totalItems || 0"
+      [itemsPerPage]="filterParams?.size || 10"
+      [boundaryLinks]="true"
+      [directionLinks]="true"
+      (pageChange)="pageChange.emit($event)"
+    ></bb-pagination-ui>
+  </div>
+</div>

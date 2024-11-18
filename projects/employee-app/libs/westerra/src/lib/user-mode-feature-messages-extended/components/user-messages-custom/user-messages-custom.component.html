@@ -1,0 +1,28 @@
+<div
+  class="bb-block bb-block--xl bb-stack"
+  [ngClass]="
+    (conversationVisible$ | async) ? 'container container--fixed-width' : ''
+  "
+>
+  <h1
+    i18n="
+      Messages header|The header on Messages page of the user
+      mode@@bb-employee-mode-user-messages.header"
+    class="bb-stack__item"
+  >
+    Messages
+  </h1>
+  <bb-messages-create-message-modal-widget-ang-custom
+    *ngIf="composeMessageFilters$ | async as filters"
+    [filters]="filters"
+    [shouldPreDefineUser]="true"
+    [isPreDefinedUserReadonly]="true"
+    [createMessageClosedEventName]="createMessageClosedEventName"
+    class="bb-stack__item bb-stack__item--push-right"
+  ></bb-messages-create-message-modal-widget-ang-custom>
+</div>
+
+<bb-ewa-conversation-list-custom
+  *ngIf="selectedUserId$ | async as userId"
+  [userId]="userId"
+></bb-ewa-conversation-list-custom>

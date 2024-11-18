@@ -1,0 +1,56 @@
+<nav role="navigation" data-role="customer-support-nav">
+  <ul class="bb-layout__vertical-nav">
+    <li class="bb-layout__vertical-nav-section">
+      <div
+        class="bb-layout__vertical-nav-header"
+        i18n="
+          Customer workspace menu header|Title text for the customer support
+          workspace nav menu@@employee-app.customer-support.nav-title"
+      >
+        Customer workspace
+      </div>
+      <ul class="bb-layout__vertical-nav">
+        <li
+          class="bb-layout__vertical-nav-item"
+          *bbIfEntitlements="entitlements.userSearch"
+        >
+          <a
+            class="bb-layout__vertical-nav-item-link"
+            routerLink="users"
+            routerLinkActive="bb-layout__vertical-nav-item-link--active"
+          >
+            <i class="bicon bicon-users bb-navigation-item__icon"></i>
+            <span
+              class="bb-layout__vertical-nav-item-title"
+              i18n="
+                User search menu item|Link text to navigate to the user search
+                form@@employee-app.customer-support-nav.user-search"
+            >
+              Users
+            </span>
+          </a>
+        </li>
+        <li
+          class="bb-layout__vertical-nav-item"
+          *bbIfEntitlements="entitlements.messageCenter"
+        >
+          <a
+            class="bb-layout__vertical-nav-item-link"
+            routerLink="messages"
+            routerLinkActive="bb-layout__vertical-nav-item-link--active"
+          >
+            <i class="bicon bicon-mail bb-navigation-item__icon"></i>
+            <span
+              class="bb-layout__vertical-nav-item-title"
+              i18n="
+                Message centre menu item|Link text to navigate to the employee
+                message centre@@employee-app.customer-support-nav.message-centre"
+            >
+              Message center
+            </span>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
