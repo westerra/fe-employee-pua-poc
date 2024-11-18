@@ -1,0 +1,125 @@
+{
+  "name": "employee-app",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "generators": {
+    "@schematics/angular:component": {
+      "inlineTemplate": true,
+      "inlineStyle": true,
+      "style": "scss",
+      "skipTests": true
+    },
+    "@schematics/angular:class": {
+      "skipTests": true
+    },
+    "@schematics/angular:directive": {
+      "skipTests": true
+    },
+    "@schematics/angular:guard": {
+      "skipTests": true
+    },
+    "@schematics/angular:interceptor": {
+      "skipTests": true
+    },
+    "@schematics/angular:pipe": {
+      "skipTests": true
+    },
+    "@schematics/angular:resolver": {
+      "skipTests": true
+    },
+    "@schematics/angular:service": {
+      "skipTests": true
+    },
+    "@schematics/angular:application": {
+      "strict": true
+    },
+    "@backbase/employee-web-app-schematics:employee-web-app": {
+      "edition": "premium"
+    }
+  },
+  "sourceRoot": "employee-app/src",
+  "prefix": "app",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist/employee-app",
+        "index": "employee-app/src/index.html",
+        "main": "employee-app/src/main.ts",
+        "polyfills": "employee-app/src/polyfills.ts",
+        "tsConfig": "employee-app/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "employee-app/src/favicon.ico",
+          "employee-app/src/assets"
+        ],
+        "styles": [
+          "employee-app/src/styles.scss"
+        ],
+        "scripts": [],
+        "stylePreprocessorOptions": {
+          "includePaths": [
+            "node_modules/@backbase/backbase-theme-retail-preset/scss"
+          ]
+        },
+        "allowedCommonJsDependencies": [
+          "bignumber.js"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "employee-app/src/environments/environment.ts",
+              "with": "employee-app/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all",
+          "baseHref": "${BASE_HREF}"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production",
+      "outputs": [
+        "{options.outputPath}"
+      ]
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "employee-app:build:production"
+        },
+        "development": {
+          "browserTarget": "employee-app:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "employee-app:build"
+      }
+    }
+  }
+}

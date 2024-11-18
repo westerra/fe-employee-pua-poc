@@ -36,7 +36,7 @@ To create a container image of the app and push it to your container registry, r
 
 ```shell
 npm run build:employee-app
-docker build -f ./projects/employee-app/Dockerfile -t your-container-registry.example.com/employee-app .
+docker build -f ./employee-app/Dockerfile -t your-container-registry.example.com/employee-app .
 docker push your-container-registry.example.com/employee-app
 ```
 
