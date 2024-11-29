@@ -5,13 +5,6 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import {
-  AdminUserDetailsViewComponent,
-  AdminManageProfileService,
-  UserProfileWrapperService,
-} from '@backbase/identity-user-profile-features';
-
-import { UserDataService } from '@backbase/identity-common-ang';
 import { NotificationService } from '@backbase/ui-ang/notification';
 import { AdminUserDetailsCustomService } from '../../services/admin-user-details-custom.service';
 import {
@@ -23,19 +16,23 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
-import { LegalEntityItem } from '@backbase/accesscontrol-http-ang';
-import { GetIdentity } from '@backbase/user-http-ang';
+import { GetIdentity, UserProfile } from '@backbase/user-http-ang';
 
 import {
   IdentityUserProfileJourneyConfigurationService,
   UserDetailsFormState,
   UserWithLegalEntity,
-} from '@backbase/identity-user-profile-util';
+} from '@backbase/internal-identity-user-profile-util';
+import { LegalEntityItem } from '@backbase/accesscontrol-v3-http-ang';
+import { AbstractDetailsFormBaseComponent, AdminManageProfileService, UserProfileDataService } from '@backbase/identity-user-profile-journey-ang';
 @Component({
   selector: 'bb-identity-admin-user-details-view-custom',
   templateUrl: './identity-admin-user-details-view-custom.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+
+
 })
+
 export class IdentityAdminUserDetailsViewCustomComponent {
   /** A template reference to the success notification element */
   @ViewChild('notificationUpdateSuccess') notificationUpdateSuccessTemplate:
@@ -76,7 +73,7 @@ export class IdentityAdminUserDetailsViewCustomComponent {
     private adminManageProfileService: AdminManageProfileService,
     private adminUserDetailsService: AdminUserDetailsCustomService,
     private notificationService: NotificationService,
-    private userDataService: UserDataService
+    private userDataService: UserProfileDataService
   ) {
     /** The current form state */
     this.currentState = UserDetailsFormState.None;
@@ -93,8 +90,7 @@ export class IdentityAdminUserDetailsViewCustomComponent {
     this.userDetails$ = this.userDetails$$.asObservable().pipe(
       tap(() => this.loadingState$$.next(true)),
       switchMap(() =>
-        this.userDataService.getUserDetails(
-          this.adminManageProfileService.userId
+        this.userDataService.getUserProfile(
         )
       ),
       switchMap((userDetails: any) => {

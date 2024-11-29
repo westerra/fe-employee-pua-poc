@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { EmployeeUserOverviewJourneyModule } from '@backbase/employee-web-app-user-mode-feature-user-overview';
+import { UserOverviewJourneyModule } from '@backbase/employee-user-overview-journey-ang';
 
 @NgModule({
-  imports: [EmployeeUserOverviewJourneyModule.forRoot()],
+  imports: [UserOverviewJourneyModule.forRoot()],
 })
 export class UserOverviewJourneyLoaderModule {}

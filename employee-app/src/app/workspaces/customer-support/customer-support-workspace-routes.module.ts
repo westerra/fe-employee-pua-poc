@@ -18,19 +18,24 @@ import {
   EmployeeWebAppLayoutModule,
   WorkspaceContainerComponent,
 } from '@backbase/employee-web-app-shared-ui-layout';
-import { EntitlementsGuard, ResolveEntitlements } from '@backbase/foundation-ang/entitlements';
+import {
+  withEntitlements,
+  ResolveEntitlements,
+} from '@backbase/foundation-ang/entitlements';
 
 export const entitlements = Object.freeze({
   userSearch: 'User.ManageUsers.view',
-  messageCenter: 'MessageCenter.ManageMessages.view OR MessageCenter.SuperviseMessages.view',
+  messageCenter:
+    'MessageCenter.ManageMessages.view OR MessageCenter.SuperviseMessages.view',
 });
 
 const messageCenterRoutes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./journeys/messages-employee-inbox-journey-loader.module').then(
-      (m) => m.MessagesEmployeeInboxJourneyLoaderModule
-    )
+    loadChildren: () =>
+      import('./journeys/messages-employee-inbox-journey-loader.module').then(
+        (m) => m.MessagesEmployeeInboxJourneyLoaderModule
+      ),
   },
 ];
 
@@ -41,6 +46,7 @@ const routes: Routes = [
       import('./user-mode/user-mode-loader.module').then(
         (mod) => mod.UserModeLoaderModule
       ),
+    title: $localize`:Page title for the user-mode@@bb-ewa.user-mode.page-title:Users`,
   },
   {
     path: '',
@@ -57,32 +63,31 @@ const routes: Routes = [
           import('./journeys/user-search-journey-loader.module').then(
             (m) => m.UserSearchJourneyLoaderModule
           ),
-        canActivate: [EntitlementsGuard],
-        data: {
-          entitlements: entitlements.userSearch,
-          redirectTo: async (resolveEntitlements: ResolveEntitlements) => {
-            if (await resolveEntitlements(entitlements.messageCenter)) return '/support/messages';
-            return '/admin';
-          }
-        },
+        canActivate: [
+          withEntitlements(
+            entitlements.userSearch,
+            async (resolveEntitlements: ResolveEntitlements) => {
+              if (await resolveEntitlements(entitlements.messageCenter))
+                return '/support/messages';
+              return '/admin';
+            }
+          ),
+        ],
+        title: $localize`:Page title for user search in the customer support workspace@@bb-ewa.customer-support.user-search.page-title:Find a user`,
       },
       {
         path: 'messages',
         children: messageCenterRoutes,
-        canActivate: [EntitlementsGuard],
-        data: {
-          entitlements: entitlements.messageCenter,
-          redirectTo: '/support/users'
-        },
+        canActivate: [
+          withEntitlements(entitlements.messageCenter, '/support/users'),
+        ],
+        title: $localize`:Page title for message center in the customer support workspace@@bb-ewa.customer-support.message-center.page-title:Message center`,
       },
     ],
   },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(routes),
-    EmployeeWebAppLayoutModule,
-  ],
+  imports: [RouterModule.forChild(routes), EmployeeWebAppLayoutModule],
 })
 export class CustomerSupportWorkspaceRoutesModule {}

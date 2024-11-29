@@ -1,7 +1,7 @@
-import { EmployeeCardsJourneyLoaderModule } from '@backbase/employee-web-app-user-mode-feature-cards';
 import { NgModule } from '@angular/core';
+import { AssistedCardManagementJourneyModule } from '@backbase/employee-assisted-card-management-journey-ang';
 
 @NgModule({
-  imports: [EmployeeCardsJourneyLoaderModule.forRoot()],
+  imports: [AssistedCardManagementJourneyModule.forRoot()],
 })
 export class CardsJourneyLoaderModule {}

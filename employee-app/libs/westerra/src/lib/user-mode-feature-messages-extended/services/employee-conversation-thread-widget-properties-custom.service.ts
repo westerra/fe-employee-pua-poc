@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { defaultModelObservable } from '@backbase/messages-shared-util';
+import { defaultModelObservable } from '@backbase/internal-ewa-messages-shared-util';
 
 const UserConversationThreadProperties = {
   maxAttachmentSize: '10',

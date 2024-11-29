@@ -16,12 +16,16 @@ import { NgModule } from '@angular/core';
 import { UserModeRoutesModule } from './user-mode-routes.module';
 import { userModeModuleImports } from './user-mode-module-imports';
 import { UserModeNavigationComponent } from './navigation/user-mode-navigation.component';
-import { EmployeeWebAppLayoutModule, Sidebar } from '@backbase/employee-web-app-shared-ui-layout';
+import {
+  EmployeeWebAppLayoutModule,
+  Sidebar,
+} from '@backbase/employee-web-app-shared-ui-layout';
 import { RouterModule } from '@angular/router';
 import { EntitlementsModule } from '@backbase/foundation-ang/entitlements';
 import { AbstractCardLimitDescriptionService } from '@backbase/employee-web-app-user-mode-feature-cards';
 import { CardLimitDescriptionService } from './services/card-limit-description.service';
-
+import { CommonModule } from '@angular/common';
+import { TooltipModule } from '@backbase/ui-ang/tooltip-directive';
 
 export const sidebar = new Sidebar(UserModeNavigationComponent);
 
@@ -32,6 +36,8 @@ export const sidebar = new Sidebar(UserModeNavigationComponent);
     RouterModule,
     ...userModeModuleImports,
     EmployeeWebAppLayoutModule,
+    CommonModule,
+    TooltipModule,
   ],
   declarations: [UserModeNavigationComponent],
   providers: [

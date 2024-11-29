@@ -1,4 +1,11 @@
-<nav role="navigation" data-role="user-mode-nav">
+<nav
+  role="navigation"
+  data-role="user-mode-nav"
+  aria-label="User"
+  i18n-aria-label="
+    User navigation|Label for the User navigation
+    menu@@employee-app.user.nav-label"
+>
   <ul class="bb-layout__vertical-nav">
     <li
       class="bb-layout__vertical-nav-item"
@@ -9,15 +16,17 @@
         routerLink="./overview"
         routerLinkActive="bb-layout__vertical-nav-item-link--active"
         [routerLinkActiveOptions]="{ exact: true }"
+        [bbTooltip]="(isOpen$ | async) ? null : customerOverviewLabel"
+        triggers="hover focus"
+        container="body"
+        [placement]="tooltipPlacement"
       >
-        <i class="bicon bicon-dashboard bb-navigation-item__icon"></i>
-        <span
-          class="bb-layout__vertical-nav-item-title"
-          i18n="
-            Customer overview menu item|Link text to navigate to the customer
-            overview page@@employee-app.user-mode-nav.customer-overview"
-        >
-          Customer overview
+        <i
+          class="bicon bicon-dashboard bb-navigation-item__icon"
+          aria-hidden="true"
+        ></i>
+        <span class="bb-layout__vertical-nav-item-title">
+          {{ customerOverviewLabel }}
         </span>
       </a>
     </li>
@@ -48,15 +57,17 @@
             routerLink="./profile"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
             [routerLinkActiveOptions]="{ exact: true }"
+            [bbTooltip]="(isOpen$ | async) ? null : profileLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-people-outline bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                Profile menu item|Link text to navigate to the profile
-                page@@employee-app.user-mode-nav.profile"
-            >
-              Profile
+            <i
+              class="bicon bicon-people-outline bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ profileLabel }}
             </span>
           </a>
         </li>
@@ -68,15 +79,17 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="./security"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : loginAndSecurityLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-lock bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                Login & security menu item|Link text to navigate to the login &
-                security page@@employee-app.user-mode-nav.security"
-            >
-              Login & security
+            <i
+              class="bicon bicon-lock bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ loginAndSecurityLabel }}
             </span>
           </a>
         </li>
@@ -88,15 +101,17 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="./devices"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : devicesLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-smartphone bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                Devices menu item|Link text to navigate to the device details
-                page@@employee-app.user-mode-nav.devices"
-            >
-              Devices
+            <i
+              class="bicon bicon-smartphone bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ devicesLabel }}
             </span>
           </a>
         </li>
@@ -108,15 +123,17 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="./sessions"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : sessionsLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-phonelink bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                Sessions menu item|Link text to navigate to the sessions
-                page@@employee-app.user-mode-nav.sessions"
-            >
-              Sessions
+            <i
+              class="bicon bicon-phonelink bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ sessionsLabel }}
             </span>
           </a>
         </li>
@@ -149,17 +166,17 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="./products"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : productsLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
             <i
               class="bicon bicon-current-accounts bb-navigation-item__icon"
+              aria-hidden="true"
             ></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                Products menu item|Link text to navigate to the products
-                page@@employee-app.user-mode-nav.products"
-            >
-              Products
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ productsLabel }}
             </span>
           </a>
         </li>
@@ -171,15 +188,39 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="./cards"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : cardsLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-credit-cards bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                Cards menu item|Link text to navigate to the cards
-                page@@employee-app.user-mode-nav.cards"
-            >
-              Cards
+            <i
+              class="bicon bicon-credit-cards bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ cardsLabel }}
+            </span>
+          </a>
+        </li>
+        <li
+          class="bb-layout__vertical-nav-item"
+          *bbIfEntitlements="entitlements.createPayment"
+        >
+          <a
+            class="bb-layout__vertical-nav-item-link"
+            routerLink="./initiate-payment"
+            routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : moveMoneyLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
+          >
+            <i
+              class="bicon bicon-transactions bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ moveMoneyLabel }}
             </span>
           </a>
         </li>
@@ -191,15 +232,39 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="./payments"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : paymentOrdersLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-payments bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                Payment orders menu item|Link text to navigate to the payment
-                orders page@@employee-app.user-mode-nav.payment-orders"
-            >
-              Payment orders
+            <i
+              class="bicon bicon-payments bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ paymentOrdersLabel }}
+            </span>
+          </a>
+        </li>
+        <li
+          class="bb-layout__vertical-nav-item"
+          *bbIfEntitlements="entitlements.pockets"
+        >
+          <a
+            class="bb-layout__vertical-nav-item-link"
+            routerLink="./pockets"
+            routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : pocketsLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
+          >
+            <i
+              class="bicon bicon-style bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ pocketsLabel }}
             </span>
           </a>
         </li>
@@ -231,16 +296,17 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="./conversation-history"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : conversationHistoryLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-speaker-notes bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                Conversation history menu item|Link text to navigate to the
-                conversation history
-                page@@employee-app.user-mode-nav.conversation-history"
-            >
-              Conversation history
+            <i
+              class="bicon bicon-speaker-notes bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ conversationHistoryLabel }}
             </span>
           </a>
         </li>
@@ -252,15 +318,17 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="./comments"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : commentsLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-mode-comment bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                Comments menu item|Link text to navigate to the comments
-                page@@employee-app.user-mode-nav.comments"
-            >
-              Comments
+            <i
+              class="bicon bicon-mode-comment bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ commentsLabel }}
             </span>
           </a>
         </li>
@@ -272,15 +340,17 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="./activity-log"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : activityLogLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-history bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                Activity log menu item|Link text to navigate to the activity log
-                page@@employee-app.user-mode-nav.activity-log"
-            >
-              Activity log
+            <i
+              class="bicon bicon-history bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ activityLogLabel }}
             </span>
           </a>
         </li>
@@ -292,15 +362,17 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="./messages"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : messagesLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-mail bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                Messages menu item|Link text to navigate to the messages page in
-                the user mode@@employee-app.user-mode-nav.messages"
-            >
-              Messages
+            <i
+              class="bicon bicon-mail bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ messagesLabel }}
             </span>
           </a>
         </li>

@@ -18,15 +18,19 @@ import {
   ServiceAgreementModeComponent,
   ServiceAgreementModeFeatureChromeModule,
 } from '@backbase/employee-web-app-service-agreement-mode-feature-chrome';
-import { EntitlementsGuard } from '@backbase/foundation-ang/entitlements';
+import { withEntitlements } from '@backbase/foundation-ang/entitlements';
+import { ServiceAgreementNameTitleResolver } from '@backbase/employee-web-app-shared-data-service-agreement-mode-context';
 
 export const entitlements = Object.freeze({
   overview: 'ServiceAgreement.ManageServiceAgreements.view',
-  approvals: 'Approvals.ManageApprovalPolicyandLevel.view AND Approvals.AssignApprovalPolicies.view',
+  approvals:
+    'Approvals.ManageApprovalPolicyandLevel.view AND Approvals.AssignApprovalPolicies.view',
   usersAndPermissions: 'User.ManageUsers.view',
   jobRoles: 'Entitlements.ManageFunctionGroups.view',
   accountGroups: 'Entitlements.ManageDataGroups.view',
   payeeGroups: 'Entitlements.ManageDataGroups.view',
+  localRestrictions:
+    'Entitlements.ManageFunctionGroups.view AND Approvals.ManageApprovalPolicyRestrictions.view',
 });
 
 const serviceAgreementModeRoutes: Routes = [
@@ -43,14 +47,16 @@ const serviceAgreementModeRoutes: Routes = [
         path: 'users-and-permissions',
         loadChildren: () =>
           import('./journeys/user-permissions-journey-loader.module').then(
-            (m) =>
-              m.UserPermissionsJourneyLoaderModule
-            ),
-        canActivate: [EntitlementsGuard],
-        data: {
-          entitlements: entitlements.usersAndPermissions,
-          redirectTo: (_, route: ActivatedRouteSnapshot) => `/admin/service-agreements/${route.params.serviceAgreementId}`,
-        },
+            (m) => m.UserPermissionsJourneyLoaderModule
+          ),
+        canActivate: [
+          withEntitlements(
+            entitlements.usersAndPermissions,
+            (_, route: ActivatedRouteSnapshot) =>
+              `/admin/service-agreements/${route.params.serviceAgreementId}`
+          ),
+        ],
+        title: $localize`:Page title for the users & permissions journey, within the service agreement mode@@bb-ewa.service-agreement-mode.users-and-permissions.page-title:Users & permissions`,
       },
       {
         path: 'job-roles',
@@ -58,11 +64,14 @@ const serviceAgreementModeRoutes: Routes = [
           import('./journeys/job-roles-journey-loader.module').then(
             (m) => m.JobRolesJourneyLoaderModule
           ),
-        canActivate: [EntitlementsGuard],
-        data: {
-          entitlements: entitlements.jobRoles,
-          redirectTo: (_, route: ActivatedRouteSnapshot) => `/admin/service-agreements/${route.params.serviceAgreementId}`,
-        },
+        canActivate: [
+          withEntitlements(
+            entitlements.jobRoles,
+            (_, route: ActivatedRouteSnapshot) =>
+              `/admin/service-agreements/${route.params.serviceAgreementId}`
+          ),
+        ],
+        title: $localize`:Page title for the job roles journey, within the service agreement mode@@bb-ewa.service-agreement-mode.job-roles.page-title:Job roles`,
       },
       {
         path: 'account-groups',
@@ -70,20 +79,29 @@ const serviceAgreementModeRoutes: Routes = [
           import('./journeys/account-groups-journey-loader.module').then(
             (m) => m.AccountGroupsJourneyLoaderModule
           ),
-        canActivate: [EntitlementsGuard],
-        data: {
-          entitlements: entitlements.accountGroups,
-          redirectTo: (_, route: ActivatedRouteSnapshot) => `/admin/service-agreements/${route.params.serviceAgreementId}`,
-        },
+        canActivate: [
+          withEntitlements(
+            entitlements.accountGroups,
+            (_, route: ActivatedRouteSnapshot) =>
+              `/admin/service-agreements/${route.params.serviceAgreementId}`
+          ),
+        ],
+        title: $localize`:Page title for the account groups journey, within the service agreement mode@@bb-ewa.service-agreement-mode.account-groups.page-title:Account groups`,
       },
       {
         path: 'payee-groups',
-        loadChildren: () => import('./journeys/payee-groups-journey-loader.module').then((m) => m.PayeeGroupsJourneyBundleModule),
-        canActivate: [EntitlementsGuard],
-        data: {
-          entitlements: entitlements.payeeGroups,
-          redirectTo: (_, route: ActivatedRouteSnapshot) => `/admin/service-agreements/${route.params.serviceAgreementId}`,
-        },
+        loadChildren: () =>
+          import('./journeys/payee-groups-journey-loader.module').then(
+            (m) => m.PayeeGroupsJourneyBundleModule
+          ),
+        canActivate: [
+          withEntitlements(
+            entitlements.payeeGroups,
+            (_, route: ActivatedRouteSnapshot) =>
+              `/admin/service-agreements/${route.params.serviceAgreementId}`
+          ),
+        ],
+        title: $localize`:Page title for the payee groups journey, within the service agreement mode@@bb-ewa.service-agreement-mode.payee-groups.page-title:Payee groups`,
       },
       {
         path: 'approvals',
@@ -91,13 +109,32 @@ const serviceAgreementModeRoutes: Routes = [
           import('./journeys/approvals-journey-loader.module').then(
             (m) => m.ApprovalsJourneyLoaderModule
           ),
-        canActivate: [EntitlementsGuard],
-        data: {
-          entitlements: entitlements.approvals,
-          redirectTo: (_, route: ActivatedRouteSnapshot) => `/admin/service-agreements/${route.params.serviceAgreementId}`,
-        },
+        canActivate: [
+          withEntitlements(
+            entitlements.approvals,
+            (_, route: ActivatedRouteSnapshot) =>
+              `/admin/service-agreements/${route.params.serviceAgreementId}`
+          ),
+        ],
+        title: $localize`:Page title for the approvals journey, within the service agreement mode@@bb-ewa.service-agreement-mode.approvals.page-title:Approvals`,
+      },
+      {
+        path: 'local-restrictions',
+        loadChildren: () =>
+          import('./journeys/local-mac-journey-loader.module').then(
+            (m) => m.LocalMacJourneyLoaderModule
+          ),
+        canActivate: [
+          withEntitlements(
+            entitlements.localRestrictions,
+            (_, route: ActivatedRouteSnapshot) =>
+              `/admin/service-agreements/${route.params.serviceAgreementId}`
+          ),
+        ],
+        title: $localize`:Page title for the local restrictions journey, within the service agreement mode@@bb-ewa.service-agreement-mode.local-restrictions.page-title:Local restrictions`,
       },
     ],
+    title: ServiceAgreementNameTitleResolver,
   },
 ];
 

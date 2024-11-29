@@ -6,8 +6,6 @@ import {
   ServiceAgreementsJourneyModule,
 } from '@backbase/service-agreements-journey-ang';
 import { ServiceAgreementModeContextService } from '@backbase/employee-web-app-shared-data-service-agreement-mode-context';
-import { TemplateRegistry } from '@backbase/foundation-ang/core';
-
 const config: Partial<ServiceAgreementsJourneyConfiguration> = {
   pageSize: 10,
   notificationDismissTime: 3,
@@ -27,7 +25,6 @@ const config: Partial<ServiceAgreementsJourneyConfiguration> = {
       provide: ServiceAgreementCommunicationService,
       useExisting: ServiceAgreementModeContextService,
     },
-    TemplateRegistry,
   ],
 })
 export class ServiceAgreementsJourneyLoaderModule {}

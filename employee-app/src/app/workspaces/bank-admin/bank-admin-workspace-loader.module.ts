@@ -20,6 +20,7 @@ import { BankAdminWorkspaceNavigationComponent } from './navigation/bank-admin-w
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { EntitlementsModule } from '@backbase/foundation-ang/entitlements';
+import { TooltipModule } from '@backbase/ui-ang/tooltip-directive';
 
 export const sidebar = new Sidebar(BankAdminWorkspaceNavigationComponent);
 
@@ -30,6 +31,7 @@ export const sidebar = new Sidebar(BankAdminWorkspaceNavigationComponent);
     RouterModule,
     CommonModule,
     ...bankAdminWorkspaceModuleImports,
+    TooltipModule,
   ],
   declarations: [BankAdminWorkspaceNavigationComponent],
   providers: [{ provide: Sidebar, useValue: sidebar }],

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { ConversationSummaryJourneyLoaderModule } from '@backbase/employee-web-app-user-mode-feature-conversation-summary';
+import { ConversationSummaryJourneyModule } from '@backbase/employee-conversation-summary-journey-ang';
 
 @NgModule({
-  imports: [ConversationSummaryJourneyLoaderModule.forRoot()],
+  imports: [ConversationSummaryJourneyModule.forRoot()],
 })
 export class AssistAreaConversationSummaryJourneyLoaderModule {}

@@ -1,0 +1,114 @@
+<form bbFocusInvalidInput [formGroup]="form" (submit)="onSubmit()">
+  <div class="bb-block bb-block--lg">
+    <bb-header-ui
+      headingType="h3"
+      i18n-heading="
+        Manage mobile number title|Text for the title of the manage mobile number
+        @@bb-user-profile-features.details-mobile-form.header-text.edit-mobile-number"
+      heading="Edit mobile number"
+    />
+  </div>
+  <div class="bb-block bb-block--lg">
+    <bb-input-phone-ui
+      [id]="'identity-user-profile-details-mobile-form-mobile-number-input'"
+      class="bb-form-field bb-form-field--md"
+      i18n-label="
+        Mobile number label|Label for the mobile number
+        field@@bb-user-profile-features.details-mobile-form.input-label-text.mobile-number"
+      label="Mobile number"
+      data-role="admin-user-details-mobile-number-input"
+      formControlName="mobileNumber"
+      [autofocus]="true"
+      [required]="true"
+      [ngClass]="{ 'bb-force-ltr bb-text-align-end': isRtl }"
+      [inputClassName]="isRtl ? 'bb-text-align-end' : undefined"
+      aria-describedby="admin-user-details-mobile-number-input-validation-message"
+      (valueChange)="onValueChange($event)"
+      autocomplete="off"
+    />
+    <bb-input-validation-message-ui
+      [showErrors]="formSubmitted && form.controls.mobileNumber.errors !== null"
+      id="admin-user-details-mobile-number-input-validation-message"
+    >
+      <span
+        *ngIf="form.controls.mobileNumber.errors?.required"
+        data-role="admin-user-details-mobile-number-required-error-message"
+        i18n="
+          Mobile number required error|Error to say that mobile number is a required
+          field@@bb-user-profile-features.details-mobile-form.validation-text.mobile-number-required"
+      >
+        You must enter a mobile number
+      </span>
+      <span
+        *ngIf="form.controls.mobileNumber.errors?.minLength"
+        data-role="admin-user-details-mobile-number-min-length-error-message"
+        i18n="
+          Phone number min length error
+          message@@bb-user-profile-features.details-mobile-form.validation-text.mobile-number-min-length-error"
+      >
+        Phone numbers must contain at least {{ form.controls.mobileNumber.errors?.minLength.expectedMinLength }} digits
+      </span>
+      <span
+        *ngIf="form.controls.mobileNumber.errors?.maxLength"
+        data-role="admin-user-details-mobile-number-max-length-error-message"
+        i18n="
+          Phone number max length error
+          message@@bb-user-profile-features.details-mobile-form.validation-text.mobile-number-max-length-error"
+      >
+        Phone numbers must contain at most {{ form.controls.mobileNumber.errors?.maxLength.expectedMaxLength }} digits
+      </span>
+      <span
+        *ngIf="form.controls.mobileNumber.errors?.countryCodeUnsupported"
+        data-role="admin-user-details-mobile-number-country-code-unsupported-error-message"
+        i18n="
+          Phone number country code unsupported error
+          message@@bb-user-profile-features.details-mobile-form.validation-text.mobile-number-country-code-unsupported-error"
+      >
+        Your country code is not supported
+      </span>
+      <span
+        data-role="admin-user-details-mobile-number-invalid-number"
+        *ngIf="form.controls.mobileNumber.errors?.invalidFormat"
+        i18n="
+          Phone number invalid
+          error@@bb-user-profile-features.details-full-name-form.validation-text.phone-number-invalid"
+      >
+        Invalid format
+      </span>
+    </bb-input-validation-message-ui>
+  </div>
+  <div class="bb-button-bar bb-button-bar--reverse">
+    <bb-load-button-ui
+      [id]="'identity-user-profile-details-mobile-form-save-button'"
+      class="bb-button-bar__button"
+      color="primary"
+      [isLoading]="isSubmitting"
+      data-role="admin-user-details-mobile-number-save"
+      i18n="
+        User details save manage button|Label text for save manage
+        button@@bb-user-profile-features.details-mobile-form.button-text.save-changes"
+      type="submit"
+    >
+      Save Changes
+    </bb-load-button-ui>
+    <button
+      bbButton
+      type="button"
+      class="bb-button-bar__button"
+      data-role="admin-user-details-mobile-number-cancel"
+      i18n="
+        User details cancel manage button|Label text for cancel manage
+        button@@bb-user-profile-features.details-mobile-form.button-text.cancel"
+      color="secondary"
+      [disabled]="isSubmitting"
+      (click)="toggleCancelModal()"
+    >
+      Cancel
+    </button>
+  </div>
+</form>
+<bb-identity-discard-modal-component
+  [modalOpen]="(isModalOpen$$ | async) || false"
+  (cancelModalClick)="toggleCancelModal()"
+  (discardChangesClick)="onDiscard()"
+/>

@@ -1,7 +1,7 @@
-import { EmployeeConversationHistoryJourneyLoaderModule } from '@backbase/employee-web-app-user-mode-feature-conversation-history';
 import { NgModule } from '@angular/core';
+import { ConversationHistoryJourneyModule } from '@backbase/employee-conversation-history-journey-ang';
 
 @NgModule({
-  imports: [EmployeeConversationHistoryJourneyLoaderModule.forRoot()],
+  imports: [ConversationHistoryJourneyModule.forRoot()],
 })
 export class ConversationHistoryJourneyLoaderModule {}

@@ -1,0 +1,123 @@
+<form bbFocusInvalidInput (submit)="submit()" [formGroup]="form">
+    <div class="bb-block bb-block--lg">
+      <bb-header-ui
+        headingType="h3"
+        i18n-heading="
+          Manage full name title|Text for the title of the manage full name
+          card@@bb-user-profile-features.details-full-name-form.header-text.edit-full-name"
+        heading="Edit full name"
+      />
+    </div>
+    <div class="bb-block bb-block--md">
+      <bb-input-text-ui
+        [id]="'identity-user-profile-details-full-name-form-given-name-input'"
+        class="bb-form-field bb-form-field--md"
+        i18n-label="
+          Given name label|Label for the full name
+          field@@bb-user-profile-features.details-full-name-form.input-label-text.given-name"
+        label="Given name(s)"
+        data-role="admin-user-details-given-name-input"
+        formControlName="givenName"
+        [autofocus]="true"
+        [required]="true"
+        [maxLength]="35"
+        aria-describedby="admin-user-details-given-name-input-invalid-validation-message"
+        autocomplete="off"
+      />
+      <bb-input-validation-message-ui
+        [showErrors]="form.controls.givenName.touched"
+        id="admin-user-details-given-name-input-invalid-validation-message"
+      >
+        <span
+          data-role="admin-user-details-given-name-required-error-message"
+          *ngIf="form.controls.givenName.errors?.required"
+          i18n="
+            Type required error|Error to say that givenName is a required
+            field@@bb-user-profile-features.details-full-name-form.validation-text.provide-given-name"
+        >
+          You must enter a given name
+        </span>
+        <span
+          data-role="admin-user-details-given-name-invalid-error-message"
+          *ngIf="form.controls.givenName.errors?.pattern"
+          i18n="
+            Given name invalid error@@bb-user-profile-features.details-full-name-form.validation-text.given-name-invalid"
+        >
+          Invalid format
+        </span>
+      </bb-input-validation-message-ui>
+    </div>
+    <div class="bb-block bb-block--lg">
+      <bb-input-text-ui
+        [id]="'identity-user-profile-details-full-name-form-family-name-input'"
+        class="bb-form-field bb-form-field--md"
+        i18n-label="
+          Full name label|Label for the full name
+          field@@bb-user-profile-features.details-full-name-form.input-label-text.family-name"
+        label="Family name(s)"
+        data-role="admin-user-details-family-name-input"
+        formControlName="familyName"
+        [required]="true"
+        [maxLength]="35"
+        aria-describedby="admin-user-details-family-name-input-invalid-validation-message"
+      />
+      <bb-input-validation-message-ui
+        [showErrors]="form.controls.familyName.touched"
+        id="admin-user-details-family-name-input-invalid-validation-message"
+      >
+        <span
+          data-role="admin-user-details-family-name-required-error-message"
+          *ngIf="form.controls.familyName.errors?.required"
+          i18n="
+            Type required error|Error to say that familyName is a required
+            field@@bb-user-profile-features.details-full-name-form.validation-text.provide-family-name"
+        >
+          You must enter a family name
+        </span>
+        <span
+          data-role="admin-user-details-family-name-invalid-error-message"
+          *ngIf="form.controls.familyName.errors?.pattern"
+          i18n="
+            Family name invalid error@@bb-user-profile-features.details-full-name-form.validation-text.family-name-invalid"
+        >
+          Invalid format
+        </span>
+      </bb-input-validation-message-ui>
+    </div>
+  
+    <div class="bb-button-bar bb-button-bar--reverse">
+      <bb-load-button-ui
+        [id]="'identity-user-profile-details-full-name-form-save-button'"
+        class="bb-button-bar__button"
+        color="primary"
+        [isLoading]="isSubmitting"
+        data-role="admin-user-details-full-name-save"
+        i18n="
+          User details save manage button|Label text for save manage
+          button@@bb-user-profile-features.details-full-name-form.button-text.save-changes"
+        type="submit"
+      >
+        Save Changes
+      </bb-load-button-ui>
+      <button
+        bbButton
+        type="button"
+        class="bb-button-bar__button"
+        data-role="admin-user-details-full-name-cancel"
+        i18n="
+          User details cancel manage button|Label text for cancel manage
+          button@@bb-user-profile-features.details-full-name-form.button-text.cancel"
+        color="secondary"
+        [disabled]="isSubmitting"
+        (click)="toggleCancelModal()"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+  <bb-identity-discard-modal-component
+    [modalOpen]="(isModalOpen$$ | async) || false"
+    (cancelModalClick)="toggleCancelModal()"
+    (discardChangesClick)="onDiscard()"
+  />
+  

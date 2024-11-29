@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { EmployeeUserCommentsJourneyModule } from '@backbase/employee-web-app-user-mode-feature-user-comments';
+import { CommentsJourneyModule } from '@backbase/employee-comments-journey-ang';
 
 @NgModule({
-  imports: [EmployeeUserCommentsJourneyModule.forRoot()],
+  imports: [CommentsJourneyModule.forRoot()],
 })
 export class UserCommentsJourneyLoaderModule {}

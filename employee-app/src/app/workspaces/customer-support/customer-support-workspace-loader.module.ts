@@ -19,6 +19,8 @@ import { RouterModule } from '@angular/router';
 import { CustomerSupportWorkspaceNavigationComponent } from './navigation/customer-support-workspace-navigation.component';
 import { Sidebar } from '@backbase/employee-web-app-shared-ui-layout';
 import { EntitlementsModule } from '@backbase/foundation-ang/entitlements';
+import { CommonModule } from '@angular/common';
+import { TooltipModule } from '@backbase/ui-ang/tooltip-directive';
 
 export const sidebar = new Sidebar(CustomerSupportWorkspaceNavigationComponent);
 
@@ -28,6 +30,8 @@ export const sidebar = new Sidebar(CustomerSupportWorkspaceNavigationComponent);
     CustomerSupportWorkspaceRoutesModule,
     RouterModule,
     ...customerSupportWorkspaceModuleImports,
+    CommonModule,
+    TooltipModule,
   ],
   declarations: [CustomerSupportWorkspaceNavigationComponent],
   providers: [{ provide: Sidebar, useValue: sidebar }],

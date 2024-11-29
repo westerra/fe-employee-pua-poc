@@ -3,38 +3,42 @@
   "$schema": "../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "generators": {
-    "@schematics/angular:component": {
-      "inlineTemplate": true,
-      "inlineStyle": true,
-      "style": "scss",
-      "skipTests": true
+    "@schematics/angular": {
+      "component": {
+        "inlineTemplate": true,
+        "inlineStyle": true,
+        "style": "scss",
+        "skipTests": true
+      },
+      "class": {
+        "skipTests": true
+      },
+      "directive": {
+        "skipTests": true
+      },
+      "guard": {
+        "skipTests": true
+      },
+      "interceptor": {
+        "skipTests": true
+      },
+      "pipe": {
+        "skipTests": true
+      },
+      "resolver": {
+        "skipTests": true
+      },
+      "service": {
+        "skipTests": true
+      },
+      "application": {
+        "strict": true
+      }
     },
-    "@schematics/angular:class": {
-      "skipTests": true
-    },
-    "@schematics/angular:directive": {
-      "skipTests": true
-    },
-    "@schematics/angular:guard": {
-      "skipTests": true
-    },
-    "@schematics/angular:interceptor": {
-      "skipTests": true
-    },
-    "@schematics/angular:pipe": {
-      "skipTests": true
-    },
-    "@schematics/angular:resolver": {
-      "skipTests": true
-    },
-    "@schematics/angular:service": {
-      "skipTests": true
-    },
-    "@schematics/angular:application": {
-      "strict": true
-    },
-    "@backbase/employee-web-app-schematics:employee-web-app": {
-      "edition": "premium"
+    "@backbase/employee-web-app-schematics": {
+      "employee-web-app": {
+        "edition": "premium"
+      }
     }
   },
   "sourceRoot": "employee-app/src",
@@ -46,25 +50,13 @@
         "outputPath": "dist/employee-app",
         "index": "employee-app/src/index.html",
         "main": "employee-app/src/main.ts",
-        "polyfills": "employee-app/src/polyfills.ts",
+        "polyfills": ["zone.js"],
         "tsConfig": "employee-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": [
-          "employee-app/src/favicon.ico",
-          "employee-app/src/assets"
-        ],
-        "styles": [
-          "employee-app/src/styles.scss"
-        ],
+        "assets": ["employee-app/src/favicon.ico", "employee-app/src/assets"],
+        "styles": ["employee-app/src/styles.scss"],
         "scripts": [],
-        "stylePreprocessorOptions": {
-          "includePaths": [
-            "node_modules/@backbase/backbase-theme-retail-preset/scss"
-          ]
-        },
-        "allowedCommonJsDependencies": [
-          "bignumber.js"
-        ]
+        "allowedCommonJsDependencies": ["bignumber.js"]
       },
       "configurations": {
         "production": {
@@ -99,9 +91,7 @@
         }
       },
       "defaultConfiguration": "production",
-      "outputs": [
-        "{options.outputPath}"
-      ]
+      "outputs": ["{options.outputPath}"]
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",

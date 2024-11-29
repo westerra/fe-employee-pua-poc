@@ -5,8 +5,6 @@ import {
   ApprovalLogJourneyConfigurationToken,
   ApprovalLogJourneyModule,
 } from '@backbase/approval-log-journey-ang';
-import { TemplateRegistry } from '@backbase/foundation-ang/core';
-
 const config: Partial<ApprovalLogJourneyConfiguration> = {
   pageSize: 10,
   notificationDismissTime: 3,
@@ -20,7 +18,6 @@ const config: Partial<ApprovalLogJourneyConfiguration> = {
       provide: ApprovalLogJourneyConfigurationToken,
       useValue: config,
     },
-    TemplateRegistry,
   ],
 })
 export class ApprovalLogJourneyLoaderModule {}

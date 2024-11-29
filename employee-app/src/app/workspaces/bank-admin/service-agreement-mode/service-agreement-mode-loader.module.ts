@@ -17,8 +17,13 @@ import { ServiceAgreementModeRoutesModule } from './service-agreement-mode-route
 import { serviceAgreementModeModuleImports } from './service-agreement-mode-module-imports';
 import { ServiceAgreementModeNavigationComponent } from './navigation/service-agreement-mode-navigation.component';
 import { RouterModule } from '@angular/router';
-import { EmployeeWebAppLayoutModule, Sidebar } from '@backbase/employee-web-app-shared-ui-layout';
+import {
+  EmployeeWebAppLayoutModule,
+  Sidebar,
+} from '@backbase/employee-web-app-shared-ui-layout';
 import { EntitlementsModule } from '@backbase/foundation-ang/entitlements';
+import { CommonModule } from '@angular/common';
+import { TooltipModule } from '@backbase/ui-ang/tooltip-directive';
 
 export const sidebar = new Sidebar(ServiceAgreementModeNavigationComponent);
 
@@ -29,6 +34,8 @@ export const sidebar = new Sidebar(ServiceAgreementModeNavigationComponent);
     ServiceAgreementModeRoutesModule,
     RouterModule,
     ...serviceAgreementModeModuleImports,
+    CommonModule,
+    TooltipModule,
   ],
   declarations: [ServiceAgreementModeNavigationComponent],
   providers: [{ provide: Sidebar, useValue: sidebar }],

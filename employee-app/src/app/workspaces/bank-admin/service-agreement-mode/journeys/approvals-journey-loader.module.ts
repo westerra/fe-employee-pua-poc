@@ -9,6 +9,7 @@ import { ApprovalJourneyCommunicationService } from '@backbase/employee-web-app-
 
 const config: Partial<CustomApprovalConfigurationInterface> = {
   displayHeading: false,
+  isEmployeeApp: true,
 };
 
 @NgModule({

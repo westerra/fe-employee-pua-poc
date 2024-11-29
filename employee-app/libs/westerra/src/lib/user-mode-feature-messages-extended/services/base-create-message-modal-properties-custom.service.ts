@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { defaultModelObservable } from '@backbase/messages-shared-util';
+import { defaultModelObservable } from '@backbase/internal-ewa-communications-messages-shared-util';
+
 export const DefaultMessageWidgetProperties = {
   debounceTime: 500,
   maxAttachmentSize: '10',

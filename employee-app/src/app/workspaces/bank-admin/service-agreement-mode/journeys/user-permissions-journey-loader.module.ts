@@ -5,8 +5,6 @@ import {
   UserPermissionsJourneyConfiguration,
   UserPermissionsJourneyConfigurationToken,
 } from '@backbase/user-permissions-journey-ang';
-import { TemplateRegistry } from '@backbase/foundation-ang/core';
-
 const config: Partial<UserPermissionsJourneyConfiguration> = {
   pageSize: 10,
   notificationDismissTime: 3,
@@ -23,7 +21,6 @@ const config: Partial<UserPermissionsJourneyConfiguration> = {
       provide: UserPermissionsJourneyConfigurationToken,
       useValue: config,
     },
-    TemplateRegistry,
   ],
 })
 export class UserPermissionsJourneyLoaderModule {}

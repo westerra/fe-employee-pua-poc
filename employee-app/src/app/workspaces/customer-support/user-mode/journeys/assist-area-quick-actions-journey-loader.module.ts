@@ -1,16 +1,12 @@
-import { EmployeeAssistAreaQuickActionsJourneyModule } from '@backbase/employee-web-app-user-mode-feature-assist-area-quick-actions';
 import { NgModule } from '@angular/core';
-import {
-  AssistAreaQuickActionsExtensionsModule,
-  ResetPasswordConfirmationExtensionComponent,
-  AccountAccessLockedRelatedGuidanceComponent,
-  AccountAccessRevokedRelatedGuidanceComponent,
-  AccountAccessUnlockedRelatedGuidanceComponent,
-} from './extensions/assist-area-quick-actions/assist-area-quick-actions-extensions.module';
+
+import { QuickAssistJourneyModule } from '@backbase/employee-quick-assist-journey-ang';
+import { AssistAreaQuickActionsExtensionsModule, ResetPasswordConfirmationExtensionComponent, AccountAccessLockedRelatedGuidanceComponent, AccountAccessUnlockedRelatedGuidanceComponent, AccountAccessRevokedRelatedGuidanceComponent } from 'quick-assist/extensions/src';
+
 @NgModule({
   imports: [
     AssistAreaQuickActionsExtensionsModule,
-    EmployeeAssistAreaQuickActionsJourneyModule.forRoot({
+    QuickAssistJourneyModule.forRoot({
       viewExtensions: {
         resetPasswordConfirmation: ResetPasswordConfirmationExtensionComponent,
         accountAccessRelatedGuidanceLockAccount:

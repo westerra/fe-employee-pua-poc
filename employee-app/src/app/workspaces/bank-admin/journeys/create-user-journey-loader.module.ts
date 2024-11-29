@@ -3,7 +3,7 @@ import {
   IdentityCreateUserJourneyModule,
   IdentityCreateUserJourneyConfigurationToken,
 } from '@backbase/identity-create-user-journey-ang';
-import { IdentityCreateUserJourneyConfiguration } from '@backbase/identity-create-user-util';
+import { IdentityCreateUserJourneyConfiguration } from '@backbase/internal-identity-create-user-util';
 
 const config: Partial<IdentityCreateUserJourneyConfiguration> = {
   notificationDismissTime: 3,

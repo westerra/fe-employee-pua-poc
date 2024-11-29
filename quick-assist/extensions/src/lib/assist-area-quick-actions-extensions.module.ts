@@ -30,4 +30,4 @@ export {
   AccountAccessLockedRelatedGuidanceComponent,
   AccountAccessUnlockedRelatedGuidanceComponent,
   AccountAccessRevokedRelatedGuidanceComponent,
-}
+};

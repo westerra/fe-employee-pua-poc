@@ -6,8 +6,6 @@ import {
   AccountGroupsJourneyModule,
   AccountGroupsJourneyConfiguration,
 } from '@backbase/account-groups-journey-ang';
-import { TemplateRegistry } from '@backbase/foundation-ang/core';
-
 const config: Partial<AccountGroupsJourneyConfiguration> = {
   pageSize: 10,
   notificationDismissTime: 3,
@@ -21,7 +19,6 @@ const config: Partial<AccountGroupsJourneyConfiguration> = {
       provide: AccountGroupsJourneyConfigurationToken,
       useValue: config,
     },
-    TemplateRegistry,
   ],
 })
 export class AccountGroupsJourneyLoaderModule {}

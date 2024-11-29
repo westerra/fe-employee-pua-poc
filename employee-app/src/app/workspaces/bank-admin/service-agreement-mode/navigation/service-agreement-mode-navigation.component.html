@@ -1,9 +1,13 @@
-<nav role="navigation" data-role="service-agreement-mode-nav">
+<nav
+  role="navigation"
+  data-role="service-agreement-mode-nav"
+  aria-label="Service agreement"
+  i18n-aria-label="
+    Service agreement navigation|Label for the Service agreement navigation
+    menu@@employee-app.service-agreement.nav-label"
+>
   <ul class="bb-layout__vertical-nav">
-    <li
-      class="bb-layout__vertical-nav-section"
-      *bbIfEntitlements="manageServiceAgreementMenuHeaderEntitlements"
-    >
+    <li class="bb-layout__vertical-nav-section">
       <div
         class="bb-layout__vertical-nav-header"
         i18n="
@@ -22,16 +26,17 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="./users-and-permissions"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : usersAndPermissionsLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-people-outline bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                users and permissions menu item|Link text to navigate to the
-                users and permissions
-                page@@employee-app.service-agreement-mode-nav.users-and-permissions"
-            >
-              Users and permissions
+            <i
+              class="bicon bicon-people-outline bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ usersAndPermissionsLabel }}
             </span>
           </a>
         </li>
@@ -43,15 +48,17 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="./job-roles"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : jobRolesLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-recent-actors bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                job roles menu item|Link text to navigate to the job roles
-                page@@employee-app.service-agreement-mode-nav.job-roles"
-            >
-              Job roles
+            <i
+              class="bicon bicon-recent-actors bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ jobRolesLabel }}
             </span>
           </a>
         </li>
@@ -63,18 +70,17 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="./account-groups"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : accountGroupsLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
             <i
               class="bicon bicon-current-accounts bb-navigation-item__icon"
+              aria-hidden="true"
             ></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                account groups menu item|Link text to navigate to the account
-                groups
-                page@@employee-app.service-agreement-mode-nav.account-groups"
-            >
-              Account groups
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ accountGroupsLabel }}
             </span>
           </a>
         </li>
@@ -86,15 +92,17 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="./payee-groups"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : payeeGroupsLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-group bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                payee groups menu item|Link text to navigate to the payee groups
-                page@@employee-app.service-agreement-mode-nav.payee-groups"
-            >
-              Payee groups
+            <i
+              class="bicon bicon-group bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ payeeGroupsLabel }}
             </span>
           </a>
         </li>
@@ -106,15 +114,39 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="./approvals"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : approvalsLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-authorizations bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                Approvals menu item|Link text to navigate to the Approvals
-                page@@bb-ewa.service-agreement-mode.navigation.menu-item.approvals"
-            >
-              Approvals
+            <i
+              class="bicon bicon-authorizations bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ approvalsLabel }}
+            </span>
+          </a>
+        </li>
+        <li
+          class="bb-layout__vertical-nav-item"
+          *bbIfEntitlements="entitlements.localRestrictions"
+        >
+          <a
+            class="bb-layout__vertical-nav-item-link"
+            routerLink="./local-restrictions"
+            routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : localRestrictionsLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
+          >
+            <i
+              class="bicon bicon-apps bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ localRestrictionsLabel }}
             </span>
           </a>
         </li>

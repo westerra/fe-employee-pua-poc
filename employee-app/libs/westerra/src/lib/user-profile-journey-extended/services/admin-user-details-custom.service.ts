@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   LegalEntitiesHttpService,
   LegalEntityItem,
-} from '@backbase/accesscontrol-http-ang';
+} from '@backbase/accesscontrol-v3-http-ang';
 import {
   IdentityManagementService,
   UpdateIdentityRequest,
@@ -20,7 +20,7 @@ export class AdminUserDetailsCustomService {
 
   /** Returns the legal entity for the given ID */
   getLegalEntity(legalEntityId: string): Observable<LegalEntityItem> {
-    return this.legalEntityData.getLegalEntityById({ legalEntityId });
+    return this.legalEntityData.getLegalEntityById({ id: legalEntityId });
   }
   /** Updates the user details for the given user's internal ID */
   updateUserDetails(

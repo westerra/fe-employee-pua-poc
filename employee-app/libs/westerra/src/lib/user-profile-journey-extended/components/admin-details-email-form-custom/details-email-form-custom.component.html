@@ -1,0 +1,85 @@
+<form bbFocusInvalidInput [formGroup]="form" (submit)="submit()">
+  <div class="bb-block bb-block--lg">
+    <bb-header-ui
+      headingType="h3"
+      i18n-heading="
+        Manage email address title|Text for the title of the manage email address
+        card@@bb-user-profile-features.details-email-form.header-text.edit-email-address"
+      heading="Edit email address"
+    />
+  </div>
+  <div class="bb-block bb-block--lg">
+    <bb-input-email-ui
+      [id]="'identity-user-profile-details-email-form-email-input'"
+      class="bb-form-field bb-form-field--md"
+      i18n-label="
+        Email address label|Label for the email address
+        field@@bb-user-profile-features.details-email-form.input-label-text.email-address"
+      label="Email address"
+      data-role="admin-user-details-email-input"
+      formControlName="emailAddress"
+      [autofocus]="true"
+      [required]="true"
+      value="value"
+      aria-describedby="admin-user-details-email-input-validation-error-message"
+      autocomplete="off"
+    />
+    <bb-input-validation-message-ui
+      [showErrors]="form.controls.emailAddress.touched"
+      id="admin-user-details-email-input-validation-error-message"
+    >
+      <span
+        data-role="admin-user-details-email-required-error-message"
+        *ngIf="form.controls.emailAddress.errors?.required"
+        i18n="
+          Type required error|Error to say that email is a required
+          field@@bb-user-profile-features.details-email-form.validation-text.provide-email-address"
+      >
+        You must enter an email address
+      </span>
+      <span
+        data-role="admin-user-details-email-invalid-error-message"
+        *ngIf="form.controls.emailAddress.errors?.email || form.controls.emailAddress.errors?.pattern"
+        i18n="
+          Type required error|Error to say that the input is not a valid email address
+          field@@bb-user-profile-features.details-email-form.validation-text.invalid-email-address"
+      >
+        You must enter a valid email address
+      </span>
+    </bb-input-validation-message-ui>
+  </div>
+  <div class="bb-button-bar bb-button-bar--reverse">
+    <bb-load-button-ui
+      [id]="'identity-user-profile-details-email-form-save-button'"
+      class="bb-button-bar__button"
+      color="primary"
+      [isLoading]="isSubmitting"
+      data-role="admin-user-details-email-address-save"
+      i18n="
+        User details save manage button|Label text for save manage
+        button@@bb-user-profile-features.details-email-form.button-text.save-changes"
+      type="submit"
+    >
+      Save Changes
+    </bb-load-button-ui>
+    <button
+      bbButton
+      type="button"
+      class="bb-button-bar__button"
+      data-role="admin-user-details-email-address-cancel"
+      i18n="
+        User details cancel manage button|Label text for cancel manage
+        button@@bb-user-profile-features.details-email-form.button-text.text-cancel"
+      color="secondary"
+      [disabled]="isSubmitting"
+      (click)="toggleCancelModal()"
+    >
+      Cancel
+    </button>
+  </div>
+</form>
+<bb-identity-discard-modal-component
+  [modalOpen]="(isModalOpen$$ | async) || false"
+  (cancelModalClick)="toggleCancelModal()"
+  (discardChangesClick)="onDiscard()"
+/>

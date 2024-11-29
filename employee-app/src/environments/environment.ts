@@ -1,17 +1,7 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
-import {
-  EmployeeWebAppEnvironmentProperties,
-
-} from '@backbase/employee-web-app-shared-util-core';
-import { mockProviders } from './mockProviders';
+import { EmployeeWebAppEnvironmentProperties } from '@backbase/employee-web-app-shared-util-core';
 import { environmentBase } from './environment.base';
 import { DevAuthService } from '@backbase/employee-web-app-root-util-dev-tools';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
-
-
 
 export const environment: EmployeeWebAppEnvironmentProperties = {
   ...environmentBase,
@@ -19,7 +9,6 @@ export const environment: EmployeeWebAppEnvironmentProperties = {
   useHashNavigation: false,
   providers: [
     ...environmentBase.providers,
-    ...mockProviders,
     {
       provide: OAuthService,
       useClass: DevAuthService,
@@ -29,14 +18,11 @@ export const environment: EmployeeWebAppEnvironmentProperties = {
       useValue: {},
     },
   ],
-  identityAdminHref: '',
-  paymentAdminHref: '',
   apiRoot: '/gateway/api',
-featureFlags: {
+  featureFlags: {
     'rtc-voice': true,
     'rtc-video': true,
   },
-
 };
 
 /*

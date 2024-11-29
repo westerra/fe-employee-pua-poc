@@ -76,14 +76,14 @@
     </ng-container>
     <ng-template #manageFullName>
       <div class="card-section card-section--highlight">
-        <bb-identity-admin-user-details-full-name-form
+        <bb-identity-admin-user-details-full-name-form-custom
           [givenName]="userDetails.givenName"
           [familyName]="userDetails.familyName"
           [isSubmitting]="(isSubmitting$$ | async) || false"
           (saveClick)="handleSaveRequest($event)"
           (closeClick)="setManagementState(formStates.None)"
         >
-        </bb-identity-admin-user-details-full-name-form>
+        </bb-identity-admin-user-details-full-name-form-custom>
       </div>
     </ng-template>
     <div class="card-section">
@@ -211,13 +211,13 @@
     </ng-template>
     <ng-template #manageEmailAddress>
       <div class="card-section card-section--highlight">
-        <bb-identity-admin-user-details-email-form
+        <bb-identity-admin-user-details-email-form-custom
           [emailValue]="userDetails.emailAddress"
           [isSubmitting]="(isSubmitting$$ | async) || false"
           (saveClick)="handleSaveRequest($event)"
           (closeClick)="setManagementState(formStates.None)"
         >
-        </bb-identity-admin-user-details-email-form>
+        </bb-identity-admin-user-details-email-form-custom>
       </div>
     </ng-template>
     <ng-template #showMobileNumber>
@@ -313,7 +313,7 @@
     </ng-template>
     <ng-template #manageMobileNumber>
       <div class="card-section card-section--highlight">
-        <bb-identity-admin-user-details-mobile-form
+        <bb-identity-admin-user-details-mobile-form-custom
           [mobileValue]="userDetails.mobileNumber || ''"
           [phoneNumberCountryCode]="configService.phoneNumberCountryCode"
           [phoneNumberDebounceTime]="configService.phoneNumberDebounceTime"
@@ -324,7 +324,7 @@
           (saveClick)="handleSaveRequest($event)"
           (closeClick)="setManagementState(formStates.None)"
         >
-        </bb-identity-admin-user-details-mobile-form>
+        </bb-identity-admin-user-details-mobile-form-custom>
       </div>
     </ng-template>
     <div class="card-section" *ngIf="legalEntityDetails">

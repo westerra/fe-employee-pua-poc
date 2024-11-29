@@ -13,17 +13,16 @@ import {
 
 const config: AuditJourneyConfiguration = {
   userIdRouteParam: 'userId',
-  displayHeading: false
-}
+  displayHeading: true,
+  heading: $localize`:Activity log header|The header on activity log tab of the User Mode in the Customer Support workspace@@bb-employee-mode-user-activity-log.header: Activity log`,
+};
 
 @NgModule({
-  imports: [
-    AuditJourneyModule.forRoot()
-  ],
+  imports: [AuditJourneyModule.forRoot()],
   providers: [
     {
       provide: AuditJourneyConfigurationToken,
-      useValue: config
+      useValue: config,
     },
     {
       provide: AUDIT_JOURNEY_ACCESS_CONTROL_BASE_PATH,

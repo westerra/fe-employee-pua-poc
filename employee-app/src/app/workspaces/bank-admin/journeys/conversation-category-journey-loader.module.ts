@@ -1,7 +1,7 @@
-import { BankAdminFeatureConversationCategoryJourneyLoaderModule } from '@backbase/employee-web-app-bank-admin-feature-conversation-category';
 import { NgModule } from '@angular/core';
+import { ConversationCategoryJourneyModule } from '@backbase/employee-conversation-category-journey-ang';
 
 @NgModule({
-  imports: [BankAdminFeatureConversationCategoryJourneyLoaderModule.forRoot()],
+  imports: [ConversationCategoryJourneyModule.forRoot()],
 })
 export class ConversationCategoryJourneyLoaderModule {}

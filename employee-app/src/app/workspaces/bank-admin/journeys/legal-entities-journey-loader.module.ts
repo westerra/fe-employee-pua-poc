@@ -14,10 +14,8 @@ import {
   APP_ARRANGEMENT_MANAGER_BASE_PATH,
   APP_CONTACT_MANAGER_BASE_PATH,
   APP_LIMIT_BASE_PATH,
-  APP_USER_BASE_PATH
+  APP_USER_BASE_PATH,
 } from '../../../service-paths.module';
-import { TemplateRegistry } from '@backbase/foundation-ang/core';
-
 const config: Partial<LegalEntitiesJourneyConfiguration> = {
   pageSize: 10,
   notificationDismissTime: 3,
@@ -37,25 +35,24 @@ const config: Partial<LegalEntitiesJourneyConfiguration> = {
     },
     {
       provide: LEGAL_ENTITY_JOURNEY_ACCESS_CONTROL_BASE_PATH,
-      useExisting: APP_ACCESS_CONTROL_BASE_PATH
+      useExisting: APP_ACCESS_CONTROL_BASE_PATH,
     },
     {
       provide: LEGAL_ENTITY_JOURNEY_ARRANGEMENT_MANAGER_BASE_PATH,
-      useExisting: APP_ARRANGEMENT_MANAGER_BASE_PATH
+      useExisting: APP_ARRANGEMENT_MANAGER_BASE_PATH,
     },
     {
       provide: LEGAL_ENTITY_JOURNEY_CONTACT_MANAGER_BASE_PATH,
-      useExisting: APP_CONTACT_MANAGER_BASE_PATH
+      useExisting: APP_CONTACT_MANAGER_BASE_PATH,
     },
     {
       provide: LEGAL_ENTITY_JOURNEY_LIMIT_BASE_PATH,
-      useExisting: APP_LIMIT_BASE_PATH
+      useExisting: APP_LIMIT_BASE_PATH,
     },
     {
       provide: LEGAL_ENTITY_JOURNEY_USER_BASE_PATH,
-      useExisting: APP_USER_BASE_PATH
+      useExisting: APP_USER_BASE_PATH,
     },
-    TemplateRegistry,
   ],
 })
 export class LegalEntitiesJourneyLoaderModule {}

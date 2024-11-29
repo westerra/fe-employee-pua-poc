@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
-import { EmployeeUserEnrollmentJourneyModule } from '@backbase/employee-web-app-bank-admin-feature-user-enrollment';
+import { UserEnrollmentJourneyModule } from '@backbase/employee-user-enrollment-journey-ang';
 
 @NgModule({
-  imports: [
-    EmployeeUserEnrollmentJourneyModule.forRoot()
-  ]
+  imports: [UserEnrollmentJourneyModule.forRoot()],
 })
 export class UserEnrollmentJourneyLoaderModule {}

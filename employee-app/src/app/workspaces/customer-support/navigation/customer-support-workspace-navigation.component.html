@@ -1,4 +1,11 @@
-<nav role="navigation" data-role="customer-support-nav">
+<nav
+  role="navigation"
+  data-role="customer-support-nav"
+  aria-label="Customer support"
+  i18n-aria-label="
+    Customer support navigation|Label for the Customer support navigation
+    menu@@employee-app.customer-support.nav-label"
+>
   <ul class="bb-layout__vertical-nav">
     <li class="bb-layout__vertical-nav-section">
       <div
@@ -18,15 +25,17 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="users"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : usersLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-users bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                User search menu item|Link text to navigate to the user search
-                form@@employee-app.customer-support-nav.user-search"
-            >
-              Users
+            <i
+              class="bicon bicon-users bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ usersLabel }}
             </span>
           </a>
         </li>
@@ -38,15 +47,17 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="messages"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : messageCenterLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-mail bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                Message centre menu item|Link text to navigate to the employee
-                message centre@@employee-app.customer-support-nav.message-centre"
-            >
-              Message center
+            <i
+              class="bicon bicon-mail bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ messageCenterLabel }}
             </span>
           </a>
         </li>

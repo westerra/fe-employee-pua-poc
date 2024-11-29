@@ -1,4 +1,11 @@
-<nav role="navigation" data-role="bank-admin-nav">
+<nav
+  role="navigation"
+  data-role="bank-admin-nav"
+  aria-label="Bank admin"
+  i18n-aria-label="
+    Bank admin navigation|Label for the Bank admin navigation
+    menu@@employee-app.bank-admin.nav-label"
+>
   <ul class="bb-layout__vertical-nav">
     <li class="bb-layout__vertical-nav-section">
       <div
@@ -18,16 +25,17 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="user-enrollment"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : userEnrollmentLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-how-to-reg bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                User enrollment menu item|Link text to navigate to the User
-                enrollment admin
-                page@@employee-app.bank-admin-nav.user-enrollment"
-            >
-              User enrollment
+            <i
+              class="bicon bicon-how-to-reg bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ userEnrollmentLabel }}
             </span>
           </a>
         </li>
@@ -39,15 +47,17 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="create-user"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : createUserLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-person-add bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                Create user menu item|Link text to navigate to the create user
-                admin page@@employee-app.bank-admin-nav.create-user"
-            >
-              Create user
+            <i
+              class="bicon bicon-person-add bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ createUserLabel }}
             </span>
           </a>
         </li>
@@ -59,15 +69,17 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="legal-entities"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : legalEntitiesLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-business bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                Legal entities menu item|Link text to navigate to the Legal
-                entities admin page@@employee-app.bank-admin-nav.legal-entities"
-            >
-              Legal entities
+            <i
+              class="bicon bicon-business bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ legalEntitiesLabel }}
             </span>
           </a>
         </li>
@@ -79,16 +91,17 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="service-agreements"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : serviceAgreementsLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-lock bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                Service Agreements menu item|Link text to navigate to the
-                Service Agreements admin
-                page@@employee-app.bank-admin-nav.service-agreements"
-            >
-              Service agreements
+            <i
+              class="bicon bicon-lock bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ serviceAgreementsLabel }}
             </span>
           </a>
         </li>
@@ -100,15 +113,17 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="approval-log"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : approvalLogLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-done-all bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                Approval log menu item|Link text to navigate to the Approval log
-                page@@employee-app.bank-admin-nav.approval-log"
-            >
-              Approval log
+            <i
+              class="bicon bicon-done-all bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ approvalLogLabel }}
             </span>
           </a>
         </li>
@@ -120,15 +135,17 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="audit"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : auditLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-audit bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                Audit menu item|Link text to navigate to the Audit page in the
-                Bank admin workspace@@employee-app.bank-admin-nav.audit"
-            >
-              Audit
+            <i
+              class="bicon bicon-audit bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ auditLabel }}
             </span>
           </a>
         </li>
@@ -140,17 +157,17 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="topics"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : topicManagementLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
             <i
               class="bicon bicon-markunread-mailbox bb-navigation-item__icon"
+              aria-hidden="true"
             ></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                Topic management menu item|Link text to navigate to the Topic
-                management page@@employee-app.bank-admin-nav.topic-management"
-            >
-              Topic management
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ topicManagementLabel }}
             </span>
           </a>
         </li>
@@ -162,16 +179,17 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="conversation-category"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : conversationCategoryLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
-            <i class="bicon bicon-speaker-notes bb-navigation-item__icon"></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                Conversation category menu item|Link text to navigate to the
-                conversation category
-                page@@employee-app.bank-admin-nav.conversation-category"
-            >
-              Conversation category
+            <i
+              class="bicon bicon-speaker-notes bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ conversationCategoryLabel }}
             </span>
           </a>
         </li>
@@ -205,17 +223,39 @@
             class="bb-layout__vertical-nav-item-link"
             routerLink="global-limits"
             routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : globalLimitsLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
           >
             <i
               class="bicon bicon-vertical-align-top bb-navigation-item__icon"
+              aria-hidden="true"
             ></i>
-            <span
-              class="bb-layout__vertical-nav-item-title"
-              i18n="
-                Global limits menu item|Link text to navigate to the Global
-                Limits page@@employee-app.bank-admin-nav.global-limits"
-            >
-              Global limits
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ globalLimitsLabel }}
+            </span>
+          </a>
+        </li>
+        <li
+          class="bb-layout__vertical-nav-item"
+          *bbIfEntitlements="entitlements.globalRestrictions"
+        >
+          <a
+            class="bb-layout__vertical-nav-item-link"
+            routerLink="global-restrictions"
+            routerLinkActive="bb-layout__vertical-nav-item-link--active"
+            [bbTooltip]="(isOpen$ | async) ? null : globalRestrictionsLabel"
+            triggers="hover focus"
+            container="body"
+            [placement]="tooltipPlacement"
+          >
+            <i
+              class="bicon bicon-apps bb-navigation-item__icon"
+              aria-hidden="true"
+            ></i>
+            <span class="bb-layout__vertical-nav-item-title">
+              {{ globalRestrictionsLabel }}
             </span>
           </a>
         </li>

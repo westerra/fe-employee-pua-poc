@@ -14,8 +14,35 @@
  */
 import { Component } from '@angular/core';
 
+/**
+ * If the user satisfies ANY ONE of these entitlements strings, they will see the customer support workspace link.
+ */
+const CUSTOMER_SUPPORT_ENTITLEMENTS = [
+  'User.ManageUsers.view',
+  'MessageCenter.ManageMessages.view',
+  'MessageCenter.SuperviseMessages.view',
+];
+/**
+ * If the user satisfies ANY ONE of these entitlements strings, they will see the bank admin workspace link.
+ */
+const BANK_ADMIN_ENTITLEMENTS = [
+  'Audit.Audit.view',
+  'Identities.ManageIdentities.create',
+  'Limits.ManageGlobalLimits.view',
+  'ServiceAgreement.ManageServiceAgreements.view',
+  'MessageCenter.ManageTopics.view',
+  'LegalEntity.ManageLegalEntities.create',
+  'LegalEntity.ManageLegalEntities.view',
+  'ConversationHistory.ConversationHistoryConfiguration.view',
+  '*.*.approve',
+];
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
 })
-export class AppComponent {}
+export class AppComponent {
+  readonly customerSupportEntitlements =
+    CUSTOMER_SUPPORT_ENTITLEMENTS.join(' OR ');
+  readonly bankAdminEntitlements = BANK_ADMIN_ENTITLEMENTS.join(' OR ');
+}

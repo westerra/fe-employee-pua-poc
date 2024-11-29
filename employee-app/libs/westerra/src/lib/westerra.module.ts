@@ -14,12 +14,4 @@ const exportableModules = [
   declarations: [],
 })
 export class WesterraModule {
-  // public static forRoot(
-  //   config: Configurations
-  // ): ModuleWithProviders<WesterraModule> {
-  //   return {
-  //     ngModule: WesterraModule,
-  //     providers: [{ provide: Configurations, useValue: config }],
-  //   };
-  // }
 }

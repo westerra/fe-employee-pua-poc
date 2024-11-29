@@ -6,8 +6,6 @@ import {
   JobRolesJourneyModule,
   JobRolesJourneyConfigurationToken,
 } from '@backbase/job-roles-journey-ang';
-import { TemplateRegistry } from '@backbase/foundation-ang/core';
-
 const config: Partial<JobRolesJourneyConfiguration> = {
   notificationDismissTime: 3,
   enableShadowLimit: true,
@@ -23,7 +21,6 @@ const config: Partial<JobRolesJourneyConfiguration> = {
       provide: JobRolesJourneyConfigurationToken,
       useValue: config,
     },
-    TemplateRegistry,
   ],
 })
 export class JobRolesJourneyLoaderModule {}

@@ -5,8 +5,6 @@ import {
   PayeeGroupsJourneyModule,
   PayeeGroupsJourneyConfiguration,
 } from '@backbase/payee-groups-journey-ang';
-import { TemplateRegistry } from '@backbase/foundation-ang/core';
-
 const config: Partial<PayeeGroupsJourneyConfiguration> = {
   notificationDismissTime: 3,
 };
@@ -19,7 +17,6 @@ const config: Partial<PayeeGroupsJourneyConfiguration> = {
       provide: PayeeGroupsJourneyConfigurationToken,
       useValue: config,
     },
-    TemplateRegistry,
   ],
 })
 export class PayeeGroupsJourneyBundleModule {}

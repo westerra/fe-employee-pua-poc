@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MessagesEmployeeCreateMessageModalWidgetComponent } from '@backbase/messages-employee-inbox-journey-feature';
-import { SharedMethodsService } from '@backbase/messages-shared-data-access';
-import { BaseCreateMessageModalPropertiesService } from '@backbase/messages-shared-feature';
+import { SharedMethodsService } from '@backbase/internal-ewa-messages-shared-data';
+import { BaseCreateMessageModalPropertiesService } from '@backbase/internal-ewa-messages-shared-feature';
 
 @Component({
   selector: 'bb-messages-create-message-modal-widget-ang-custom',

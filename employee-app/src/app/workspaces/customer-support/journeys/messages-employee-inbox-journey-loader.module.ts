@@ -1,6 +1,5 @@
 import { NgModule, Provider } from '@angular/core';
 import {
-  MESSAGES_EMPLOYEE_INBOX_JOURNEY_MESSAGES_BASE_PATH,
   MessagesEmployeeInboxJourneyConfiguration,
   MessagesEmployeeInboxJourneyConfigurationToken,
   MessagesEmployeeInboxJourneyModule,
@@ -33,10 +32,10 @@ const CustomMessagesEmployeeInboxJourneyConfiguration: Array<Provider> = [
       // senderDisplayName: 'Backbase',
     } as Partial<MessagesEmployeeInboxJourneyConfiguration>,
   },
-  {
-    provide: MESSAGES_EMPLOYEE_INBOX_JOURNEY_MESSAGES_BASE_PATH,
-    useExisting: APP_MESSAGES_BASE_PATH,
-  },
+  // {
+  //   provide: MESSAGES_EMPLOYEE_INBOX_JOURNEY_MESSAGES_BASE_PATH,
+  //   useExisting: APP_MESSAGES_BASE_PATH,
+  // },
 ];
 
 @NgModule({

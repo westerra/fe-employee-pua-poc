@@ -7,20 +7,20 @@ import {
   SharedMethodsService,
   BaseConversationsListPropertiesService,
   SharedMethodsModule,
-  EmployeeConversationThreadWidgetPropertiesService,
-  MessagesEmployeeConversationThreadWidgetService,
+  EmployeeConversationThreadFeaturePropertiesService,
+  MessagesEmployeeConversationThreadFeatureService,
   AbstractBaseMessagesConversationThreadService,
-} from '@backbase/messages-shared-data-access';
+} from '@backbase/internal-ewa-messages-shared-data';
 
-import { MessagesEncodingService } from '@backbase/messages-shared-util';
+import { MessagesEncodingService } from '@backbase/internal-ewa-messages-shared-util';
 
 import {
   MessagesUploadAttachmentsService,
-  BaseConversationsListWidgetModule,
+  BaseConversationsListFeatureModule,
   BaseCreateMessageModalPropertiesService,
   BaseUploadAttachmentsService,
   MessagesEmployeeUploadAttachmentsService,
-} from '@backbase/messages-shared-feature';
+} from '@backbase/internal-ewa-messages-shared-feature';
 import { BadgeModule } from '@backbase/ui-ang/badge';
 import { ButtonModule } from '@backbase/ui-ang/button';
 import { CheckboxGroupModule } from '@backbase/ui-ang/checkbox-group';
@@ -36,7 +36,7 @@ import {
   PreventBubbleDownModule,
   MessagesRequestErrorModule,
   MessagesConversationMessageModule,
-} from '@backbase/messages-shared-ui';
+} from '@backbase/internal-ewa-messages-shared-ui';
 import {
   EmployeeHttpService,
   MessagecenterHttpService,
@@ -55,7 +55,7 @@ import {
 import {
   MessagesHeadingModule,
   MessagesTabsModule,
-} from '@backbase/messages-shared-ui';
+} from '@backbase/internal-ewa-messages-shared-ui';
 import {
   ConversationListFilterService,
   ConversationListService,
@@ -109,7 +109,7 @@ const innerModules = [
   MessagesTabsModule,
 
   UserModeFeatureMessagesModule,
-  BaseConversationsListWidgetModule,
+  BaseConversationsListFeatureModule,
   MessagesEmployeeCreateMessageModalWidgetModule,
   MessagesEmployeeConversationsListWidgetModule,
   MessagesEmployeeConversationThreadWidgetModule,
@@ -144,7 +144,7 @@ const serviceDependencies = [
   ConversationListService,
   EmployeeHttpService,
   IdentityManagementService,
-  MessagesEmployeeConversationThreadWidgetService,
+  MessagesEmployeeConversationThreadFeatureService,
 ];
 
 @NgModule({
@@ -158,7 +158,7 @@ const serviceDependencies = [
       useClass: BaseCreateMessageModalPropertiesCustomService,
     },
     {
-      provide: EmployeeConversationThreadWidgetPropertiesService,
+      provide: EmployeeConversationThreadFeaturePropertiesService,
       useClass: EmployeeConversationThreadWidgetPropertiesCustomService,
     },
     {
@@ -171,7 +171,7 @@ const serviceDependencies = [
     },
     {
       provide: AbstractBaseMessagesConversationThreadService,
-      useClass: MessagesEmployeeConversationThreadWidgetService,
+      useClass: MessagesEmployeeConversationThreadFeatureService,
     },
   ],
 })

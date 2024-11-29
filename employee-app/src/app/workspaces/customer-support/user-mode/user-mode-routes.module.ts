@@ -19,20 +19,20 @@ import {
   UserModeComponent,
   UserModeFeatureChromeModule,
 } from '@backbase/employee-web-app-user-mode-feature-chrome';
-import {
-  MessagesComponent,
-  UserModeFeatureMessagesModule,
-} from '@backbase/employee-web-app-user-mode-feature-messages';
-import {
-  ActivityLogComponent,
-  UserModeFeatureActivityLogModule,
-} from '@backbase/employee-web-app-user-mode-feature-activity-log';
+import { UserModeFeatureActivityLogModule } from '@backbase/employee-web-app-user-mode-feature-activity-log';
 import { AssistAreaContainerComponent } from '@backbase/employee-web-app-shared-ui-layout';
-import { EntitlementsGuard } from '@backbase/foundation-ang/entitlements';
+import { withEntitlements } from '@backbase/foundation-ang/entitlements';
 import {
   UserMessagesCustomComponent,
   UserModeFeatureMessagesExtendedModule,
 } from '@backbase/westerra';
+import { AssistAreaQuickActionsTabComponent } from '@backbase/employee-web-app-user-mode-feature-assist-area-quick-actions';
+import { UsersFullNameTitleResolver } from '@backbase/employee-web-app-shared-data-user-mode-context';
+import { MessageTitleResolver } from '@backbase/messages-employee-inbox-journey-ang';
+import {
+  getServiceAgreementSelectionJourneyWrapperRouteData,
+  ServiceAgreementSelectionJourneyWrapperComponent,
+} from '@backbase/employee-web-app-user-mode-feature-service-agreement-selector';
 
 export const entitlements = Object.freeze({
   security: 'Identities.ManageIdentities.edit',
@@ -49,6 +49,8 @@ export const entitlements = Object.freeze({
   conversationHistoryView: 'ConversationHistory.ConversationHistory.view',
   conversationHistoryCreate: 'ConversationHistory.ConversationHistory.create',
   paymentOrders: 'Payments.*.view',
+  createPayment: 'Payments.*.create',
+  pockets: 'Employee.Emulate.view',
 });
 
 const assistAreaRoutes: Routes = [
@@ -65,8 +67,7 @@ const assistAreaRoutes: Routes = [
             './journeys/assist-area-quick-actions-journey-loader.module'
           ).then((m) => m.AssistAreaQuickActionsJourneyLoaderModule),
         data: {
-          tabLabel: $localize`:Quick assist tab label|Quick assist tab label on the Customer Mode page@@bb-ewa-user-mode.assist-area.tabs.quick-assist:Quick assist`,
-          icon: 'lightbulb-outline',
+          tabComponent: () => AssistAreaQuickActionsTabComponent,
         },
       },
       {
@@ -85,6 +86,7 @@ const assistAreaRoutes: Routes = [
           entitlements: entitlements.conversationHistoryCreate,
           icon: 'mode-edit',
         },
+        canActivate: [withEntitlements(entitlements.conversationHistoryCreate)],
       },
     ],
   },
@@ -105,12 +107,14 @@ const routes: Routes = [
           import(
             './journeys/admin-manage-login-security-journey-loader.module'
           ).then((m) => m.AdminManageLoginSecurityJourneyLoaderModule),
-        canActivate: [EntitlementsGuard],
-        data: {
-          entitlements: entitlements.security,
-          redirectTo: (_, route: ActivatedRouteSnapshot) =>
-            `/support/users/${route.params.userId}/overview`,
-        },
+        canActivate: [
+          withEntitlements(
+            entitlements.security,
+            (_, route: ActivatedRouteSnapshot) =>
+              `/support/users/${route.params.userId}/overview`
+          ),
+        ],
+        title: $localize`:Page title for the login & security journey, within the user-mode@@bb-ewa.user-mode.login-and-security.page-title:Login & security`,
       },
       {
         path: 'devices',
@@ -118,12 +122,14 @@ const routes: Routes = [
           import('./journeys/device-management-journey-loader.module').then(
             (m) => m.DeviceManagementJourneyLoaderModule
           ),
-        canActivate: [EntitlementsGuard],
-        data: {
-          entitlements: entitlements.devices,
-          redirectTo: (_, route: ActivatedRouteSnapshot) =>
-            `/support/users/${route.params.userId}/overview`,
-        },
+        canActivate: [
+          withEntitlements(
+            entitlements.devices,
+            (_, route: ActivatedRouteSnapshot) =>
+              `/support/users/${route.params.userId}/overview`
+          ),
+        ],
+        title: $localize`:Page title for the devices journey, within the user-mode@@bb-ewa.user-mode.devices.page-title:Devices`,
       },
       {
         path: 'products',
@@ -131,12 +137,42 @@ const routes: Routes = [
           import('./journeys/products-journey-loader.module').then(
             (m) => m.ProductsJourneyLoaderModule
           ),
-        canActivate: [EntitlementsGuard],
+        canActivate: [
+          withEntitlements(
+            entitlements.products,
+            (_, route: ActivatedRouteSnapshot) =>
+              `/support/users/${route.params.userId}/overview`
+          ),
+        ],
+        title: $localize`:Page title for the products journey, within user-mode@@bb-ewa.user-mode.products.page-title:Products`,
+      },
+      {
+        path: 'initiate-payment',
         data: {
-          entitlements: entitlements.products,
-          redirectTo: (_, route: ActivatedRouteSnapshot) =>
-            `/support/users/${route.params.userId}/overview`,
+          ...getServiceAgreementSelectionJourneyWrapperRouteData({
+            header: $localize`:
+          The main header on the initiate payment journey in the user mode
+          @@bb-ewa.initiate-payment-journey.shell.header:
+          Move money`,
+            helperText: (serviceAgreementName) => $localize`:
+          Helper text indicating the service agreement context on the initiate payments page
+          @@bb-ewa.initiate-payment-journey.shell.service-agreement-context-helper:
+          Payments for accounts visible to the customer in the service agreement '${serviceAgreementName}'`,
+          }),
         },
+        component: ServiceAgreementSelectionJourneyWrapperComponent,
+        loadChildren: () =>
+          import('./journeys/initiate-payment-journey-loader.module').then(
+            (m) => m.InitiatePaymentJourneyLoaderModule
+          ),
+        canActivate: [
+          withEntitlements(
+            entitlements.createPayment,
+            (_, route: ActivatedRouteSnapshot) =>
+              `/support/users/${route.params.userId}/overview`
+          ),
+        ],
+        title: $localize`:Page title for the initiate payment journey, within user-mode@@bb-ewa.user-mode.initiate-payment.page-title:Move money`,
       },
       {
         path: 'payments',
@@ -144,37 +180,49 @@ const routes: Routes = [
           import('./journeys/payments-journey-loader.module').then(
             (m) => m.PaymentsJourneyLoaderModule
           ),
-        data: {
-          entitlements: entitlements.paymentOrders,
-          redirectTo: (_, route: ActivatedRouteSnapshot) =>
-            `/support/users/${route.params.userId}/overview`,
-        },
-        canActivate: [EntitlementsGuard],
+        canActivate: [
+          withEntitlements(
+            entitlements.paymentOrders,
+            (_, route: ActivatedRouteSnapshot) =>
+              `/support/users/${route.params.userId}/overview`
+          ),
+        ],
+        title: $localize`:Page title for the payments journey, within user-mode@@bb-ewa.user-mode.payments.page-title:Payment orders`,
       },
       {
         path: 'messages',
         // component: MessagesComponent,
-        component: UserMessagesCustomComponent,
-        canActivate: [EntitlementsGuard],
+        loadChildren: () =>
+          import('./journeys/assist-messaging-journey-loader.module').then(
+            (m) => m.AssistMessagingJourneyLoaderModule
+          ),
+        canActivate: [
+          withEntitlements(
+            entitlements.messages,
+            (_, route: ActivatedRouteSnapshot) =>
+              `/support/users/${route.params.userId}/overview`
+          ),
+        ],
         data: {
-          entitlements: entitlements.messages,
-          redirectTo: (_, route: ActivatedRouteSnapshot) =>
-            `/support/users/${route.params.userId}/overview`,
+          conversationIdQueryParamName: 'cid',
         },
+        title: MessageTitleResolver,
+        runGuardsAndResolvers: 'paramsOrQueryParamsChange',
       },
       {
         path: 'activity-log',
-        component: ActivityLogComponent,
         loadChildren: () =>
           import('./journeys/audit-journey-loader.module').then(
             (m) => m.AuditJourneyLoaderModule
           ),
-        canLoad: [EntitlementsGuard],
-        data: {
-          entitlements: entitlements.audit,
-          redirectTo: (_, route: ActivatedRouteSnapshot) =>
-            `/support/users/${route.params.userId}/overview`,
-        },
+        canMatch: [
+          withEntitlements(
+            entitlements.audit,
+            (_, route: ActivatedRouteSnapshot) =>
+              `/support/users/${route.params.userId}/overview`
+          ),
+        ],
+        title: $localize`:Page title for the activity log journey, within user-mode@@bb-ewa.user-mode.activity-log.page-title:Activity log`,
       },
       {
         path: 'profile',
@@ -182,8 +230,8 @@ const routes: Routes = [
           import('./journeys/user-profile-journey-loader.module').then(
             (m) => m.UserProfileJourneyLoaderModule
           ),
-        canActivate: [EntitlementsGuard],
-        data: { entitlements: entitlements.profile, redirectTo: '/support' },
+        canActivate: [withEntitlements(entitlements.profile, '/support')],
+        title: $localize`:Page title for the user profile journey, within the user-mode@@bb-ewa.user-mode.user-profile.page-title:Profile`,
       },
       {
         path: 'sessions',
@@ -191,12 +239,14 @@ const routes: Routes = [
           import('./journeys/user-sessions-journey-loader.module').then(
             (m) => m.UserSessionsJourneyLoaderModule
           ),
-        canActivate: [EntitlementsGuard],
-        data: {
-          entitlements: entitlements.sessions,
-          redirectTo: (_, route: ActivatedRouteSnapshot) =>
-            `/support/users/${route.params.userId}/overview`,
-        },
+        canActivate: [
+          withEntitlements(
+            entitlements.sessions,
+            (_, route: ActivatedRouteSnapshot) =>
+              `/support/users/${route.params.userId}/overview`
+          ),
+        ],
+        title: $localize`:Page title for the sessions journey, within the user-mode@@bb-ewa.user-mode.sessions.page-title:Sessions`,
       },
       {
         path: 'comments',
@@ -204,12 +254,14 @@ const routes: Routes = [
           import('./journeys/user-comments-journey-loader.module').then(
             (m) => m.UserCommentsJourneyLoaderModule
           ),
-        canActivate: [EntitlementsGuard],
-        data: {
-          entitlements: entitlements.comments,
-          redirectTo: (_, route: ActivatedRouteSnapshot) =>
-            `/support/users/${route.params.userId}/overview`,
-        },
+        canActivate: [
+          withEntitlements(
+            entitlements.comments,
+            (_, route: ActivatedRouteSnapshot) =>
+              `/support/users/${route.params.userId}/overview`
+          ),
+        ],
+        title: $localize`:Page title for the comments journey, within the user-mode@@bb-ewa.user-mode.comments.page-title:Comments`,
       },
       {
         path: 'cards',
@@ -217,12 +269,14 @@ const routes: Routes = [
           import('./journeys/cards-journey-loader.module').then(
             (m) => m.CardsJourneyLoaderModule
           ),
-        canActivate: [EntitlementsGuard],
-        data: {
-          entitlements: entitlements.cards,
-          redirectTo: (_, route: ActivatedRouteSnapshot) =>
-            `/support/users/${route.params.userId}/overview`,
-        },
+        canActivate: [
+          withEntitlements(
+            entitlements.cards,
+            (_, route: ActivatedRouteSnapshot) =>
+              `/support/users/${route.params.userId}/overview`
+          ),
+        ],
+        title: $localize`:Page title for the cards journey, within the user-mode@@bb-ewa.user-mode.cards.page-title:Cards`,
       },
       {
         path: '',
@@ -235,12 +289,14 @@ const routes: Routes = [
           import('./journeys/user-overview-journey-loader.module').then(
             (m) => m.UserOverviewJourneyLoaderModule
           ),
-        canActivate: [EntitlementsGuard],
-        data: {
-          entitlements: entitlements.overview,
-          redirectTo: (_, route: ActivatedRouteSnapshot) =>
-            `/support/users/${route.params.userId}/profile`,
-        },
+        canActivate: [
+          withEntitlements(
+            entitlements.overview,
+            (_, route: ActivatedRouteSnapshot) =>
+              `/support/users/${route.params.userId}/profile`
+          ),
+        ],
+        title: $localize`:Page title for the user overview journey, within user-mode@@bb-ewa.user-mode.user-overview.page-title:User overview`,
       },
       ...assistAreaRoutes,
       {
@@ -249,14 +305,32 @@ const routes: Routes = [
           import('./journeys/conversation-history-journey-loader.module').then(
             (m) => m.ConversationHistoryJourneyLoaderModule
           ),
-        canActivate: [EntitlementsGuard],
-        data: {
-          entitlements: entitlements.conversationHistoryView,
-          redirectTo: (_, route: ActivatedRouteSnapshot) =>
-            `/support/users/${route.params.userId}/overview`,
-        },
+        canActivate: [
+          withEntitlements(
+            entitlements.conversationHistoryView,
+            (_, route: ActivatedRouteSnapshot) =>
+              `/support/users/${route.params.userId}/overview`
+          ),
+        ],
+        title: $localize`:Page title for the conversation history journey, within the user-mode@@bb-ewa.user-mode.conversation-history.page-title:Conversation history`,
+      },
+      {
+        path: 'pockets',
+        loadChildren: () =>
+          import('./journeys/pockets-journey-loader.module').then(
+            (m) => m.PocketsJourneyLoaderModule
+          ),
+        canActivate: [
+          withEntitlements(
+            entitlements.pockets,
+            (_, route: ActivatedRouteSnapshot) =>
+              `/support/users/${route.params.userId}/overview`
+          ),
+        ],
+        title: $localize`:Page title for the pockets journey, within user-mode@@bb-ewa.user-mode.pockets.page-title:Pockets`,
       },
     ],
+    title: UsersFullNameTitleResolver,
   },
   {
     path: '',
